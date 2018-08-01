@@ -6,13 +6,13 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/01 14:39:46 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/01 18:06:07 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/01 18:50:27 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/VM.hpp"
 
-void VM::push(int value) 
+void VM::push(IOperand * value)
 {
 	this->_stack.push(value);
 }
@@ -31,18 +31,18 @@ void VM::pop( void )
 	}
 }
 
-int  VM::print( void )
+void	VM::print( void )
 {
 	try
 	{
 		if (this->_stack.empty())
 			throw ErrorException("Error : Print on empty stack");
-		return (this->_stack.top());
+		Operand<int> *x = dynamic_cast<Operand<int>*>(this->_stack.top());
+		std::cout << x->getValue() << std::endl;
 	}
 	catch (std::exception & e)
 	{
 		std::cout << e.what() << std::endl;
-		return (0);
 	}
 }
 

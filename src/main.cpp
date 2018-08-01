@@ -6,7 +6,7 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 17:52:29 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/01 18:24:35 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/01 18:50:46 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,13 @@ int main(int arc, char **argv)
 {
 	VM vm;
 	Operand<int> a(11);
+	Operand<int> b(15);
 
-	std::cout << a.getValue() << std::endl;
-	vm.push(5);
-	vm.push(6);
-	std::cout << vm.print() << std::endl;
 	vm.pop();
-	std::cout << vm.print() << std::endl;
-	vm.pop();
-	vm.pop();
-	std::cout << vm.print() << std::endl;
+	vm.print();
+	vm.push(&a);
+	vm.push(&b);
+	vm.print();
+	
 	return (0);
 }

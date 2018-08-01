@@ -6,7 +6,7 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/01 14:02:12 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/01 18:05:03 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/01 18:49:45 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@
 class VM {
 
 	private:
-		std::stack <int> _stack;
+		std::stack <IOperand *> _stack;
 
 	public:
 
 		void pop( void );
-		void push(int value);
-		int  print( void );
+		void push(IOperand * value);
+		void print( void );
 
 	class ErrorException : public std::exception {
 		
