@@ -6,18 +6,21 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 17:29:21 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/07/31 17:55:15 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/01 17:35:38 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef IOPERAND_VM
+# define IOPERAND_VM
 
 #include <string>
 
 enum eOperandType {
-	int8,
-	int16,
-	int32,
-	float32,
-	double64
+	_int8,
+	_int16,
+	_int32,
+	_float,
+	_double
 };
 
 class IOperand {
@@ -35,3 +38,5 @@ class IOperand {
 		virtual std::string const & toString( void ) const = 0; // String representation of the instance
 		virtual ~IOperand( void ) {}
 };
+
+#endif

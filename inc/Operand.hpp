@@ -6,24 +6,67 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 17:47:16 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/07/31 17:50:53 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/01 18:23:23 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef OPERAND_VM
+# define OPERAND_VM
+
 #include "IOperand.hpp"
 
-class Operand {
+template <typename T>
+class Operand : public IOperand {
+
+	private:
+		T 				_value;
+		int				_precision;
+		eOperandType 	_type;
 
 	public:
-		int getPrecision( void ) const; // Precision of the type of the instance
-		eOperandType getType( void ) const; // Type of the instance
 
-		IOperand const * operator+( IOperand const & rhs ) const; // Sum
-		IOperand const * operator-( IOperand const & rhs ) const; // Difference
-		IOperand const * operator*( IOperand const & rhs ) const; // Product
-		IOperand const * operator/( IOperand const & rhs ) const; // Quotient
-		IOperand const * operator%( IOperand const & rhs ) const; // Modulo
+		Operand<T>(T value) {
+			this->_value = value;
+		}
 
-		std::string const & toString( void ) const; // String representation of the instance
+		T & getValue( void ) { return (this->_value); }
+		int getPrecision( void ) const { return (this->_precision); }
+		eOperandType getType( void ) const { return (this->_type); }
+
+		void	setValue(T & value) { this->_value = value; }
+
+		IOperand const * operator+( IOperand const & rhs ) const
+		{
+			
+		}
+		
+		IOperand const * operator-( IOperand const & rhs ) const
+		{
+			
+		}
+		
+		IOperand const * operator*( IOperand const & rhs ) const
+		{
+			
+		}
+		
+		IOperand const * operator/( IOperand const & rhs ) const
+		{
+			
+		}
+
+		IOperand const * operator%( IOperand const & rhs ) const
+		{
+			
+		}
+
+		std::string const & toString( void ) const
+		{
+
+		}
+		
 		~Operand( void ) {}
+		
 };
+
+#endif
