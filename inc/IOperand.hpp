@@ -6,7 +6,7 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 17:29:21 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/01 17:35:38 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/04 14:51:10 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <string>
 
 enum eOperandType {
+	_int,
 	_int8,
 	_int16,
 	_int32,

@@ -6,7 +6,7 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 17:47:16 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/01 18:23:23 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/04 15:48:08 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ class Operand : public IOperand {
 		int getPrecision( void ) const { return (this->_precision); }
 		eOperandType getType( void ) const { return (this->_type); }
 
-		void	setValue(T & value) { this->_value = value; }
+		void	setValue(T value) { this->_value = value; }
+		void	setType(eOperandType type) { this->_type = type; }
 
 		IOperand const * operator+( IOperand const & rhs ) const
 		{
