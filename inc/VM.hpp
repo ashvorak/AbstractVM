@@ -6,7 +6,7 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/01 14:02:12 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/01 18:49:45 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/08 18:26:41 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,22 @@
 
 #include <iostream>
 #include <string>
-#include <stack>
+#include <list>
 
-#include "Operand.hpp"
+#include "OperandFactory.hpp"
 
 class VM {
 
 	private:
-		std::stack <IOperand *> _stack;
+		std::list <IOperand const *> _stack;
 
 	public:
 
+		void push( IOperand const * value );
 		void pop( void );
-		void push(IOperand * value);
+		void dump( void );
+		void assert( IOperand *value );
+
 		void print( void );
 
 	class ErrorException : public std::exception {

@@ -6,7 +6,7 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 17:52:29 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/04 16:30:19 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/08 19:05:55 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,19 @@ int main(int arc, char **argv)
 {
 	VM vm;
 
-	Operand<double> a(6.2);
-	a.setType(_double);
+	OperandFactory Factory;
 
-	Operand<float> b(11.7);
-	b.setType(_float);
-
-	Operand<double> c(15.1);
-	c.setType(_double);
-
-	Operand<int> d(1);
-	d.setType(_int);
-	
-	Operand<int> e(2);
-	e.setType(_int);
+	IOperand const *a = Factory.createOperand(Int8, "42");
+	IOperand const *b = Factory.createOperand(Float, "42.42");
+	IOperand const *c = Factory.createOperand(Double, "142.142");
 
 	vm.pop();
-	vm.print();
-	vm.push(&b);
-	vm.push(&a);
-	vm.push(&c);
-	vm.push(&e);
-	vm.print();
+	vm.push(b);
+	vm.push(a);
+	vm.push(c);
+	vm.push(c);
+
+	vm.dump();
 
 	return (0);
 }

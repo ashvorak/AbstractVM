@@ -6,22 +6,21 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 17:29:21 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/04 14:51:10 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/08 15:21:35 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IOPERAND_VM
-# define IOPERAND_VM
+#ifndef IOPERAND_HPP
+# define IOPERAND_HPP
 
 #include <string>
 
 enum eOperandType {
-	_int,
-	_int8,
-	_int16,
-	_int32,
-	_float,
-	_double
+	Int8,
+	Int16,
+	Int32,
+	Float,
+	Double
 };
 
 class IOperand {

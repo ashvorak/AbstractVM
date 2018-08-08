@@ -6,7 +6,7 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/01 15:53:29 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/01 16:08:56 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/08 15:20:55 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ class Parser {
 		std::string _instruction;
 
 	public:
+		Parser(std::string instruct);
+
 		void setInstruction(std::string const instruction);
 		
-	
-
 };
 
 #endif

@@ -6,15 +6,15 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/01 14:39:46 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/04 16:30:48 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/08 18:26:53 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/VM.hpp"
 
-void VM::push(IOperand * value)
+void VM::push(IOperand const * value)
 {
-	this->_stack.push(value);
+	this->_stack.push_front(value);
 }
 
 void VM::pop( void )
@@ -23,7 +23,7 @@ void VM::pop( void )
 	{
 		if (this->_stack.empty())
 			throw ErrorException("Error : Pop on empty stack");
-		this->_stack.pop();
+		this->_stack.pop_front();
 	}
 	catch (std::exception & e)
 	{
@@ -31,41 +31,24 @@ void VM::pop( void )
 	}
 }
 
+void	VM::dump( void )
+{
+	std::list<IOperand const *>::iterator it;
+	
+	for(it = this->_stack.begin(); it != this->_stack.end(); ++it)
+	{
+    	std::cout << (*it)->toString() << std::endl;
+	}
+}
+
+void	VM::assert( IOperand *value )
+{
+	
+}
+
 void	VM::print( void )
 {
-	try
-	{
-		if (this->_stack.empty())
-			throw ErrorException("Error : Print on empty stack");
-		IOperand *tmp = this->_stack.top();
-		switch (tmp->getType())
-		{
-			case _int :
-			{
-				Operand<int> *x = dynamic_cast<Operand<int>*>(tmp);
-				std::cout << x->getValue() << std::endl;
-				break ;
-			}
-			case _float :
-			{
-				Operand<float> *x = dynamic_cast<Operand<float>*>(tmp);
-				std::cout << x->getValue() << std::endl;
-				break ;
-			}
-			case _double :
-			{
-				Operand<double> *x = dynamic_cast<Operand<double>*>(tmp);
-				std::cout << x->getValue() << std::endl;
-				break ;
-			}
-			default :
-				break ;
-		}
-	}
-	catch (std::exception & e)
-	{
-		std::cout << e.what() << std::endl;
-	}
+	
 }
 
 VM::ErrorException::ErrorException() {}
