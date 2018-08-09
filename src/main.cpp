@@ -21,12 +21,26 @@ int main(int arc, char **argv)
 	IOperand const *a = Factory.createOperand(Int8, "42");
 	IOperand const *b = Factory.createOperand(Float, "42.42");
 	IOperand const *c = Factory.createOperand(Double, "142.142");
+	IOperand const *d = Factory.createOperand(Double, "41.142");
+	IOperand const *x = Factory.createOperand(Int8, "42");
+	IOperand const *y = Factory.createOperand(Int8, "42");
 
-	vm.pop();
 	vm.push(b);
 	vm.push(a);
 	vm.push(c);
-	vm.push(c);
+	vm.push(d);
+	vm.push(x);
+	vm.push(y);
+
+	vm.dump();
+
+	std::cout << "-------" << std::endl;
+
+	vm.print();
+
+	vm.assert("42", Int8);
+
+	vm.mul();
 
 	vm.dump();
 

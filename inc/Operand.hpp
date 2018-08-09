@@ -6,14 +6,16 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 17:47:16 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/08 17:46:52 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/09 11:13:29 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OPERAND_HPP
 # define OPERAND_HPP
 
+#include <cmath>
 #include "IOperand.hpp"
+#include "OperandFactory.hpp"
 
 template <typename T>
 class Operand : public IOperand {
@@ -44,27 +46,61 @@ class Operand : public IOperand {
 
 		IOperand const * operator+( IOperand const & rhs ) const
 		{
-			
+			std::string		value;
+			eOperandType	type;
+			OperandFactory	Factory;
+
+			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
+			value = std::to_string(this->_value + stod(rhs.toString(), 0));
+			return (Factory.createOperand(type, value));
 		}
 		
 		IOperand const * operator-( IOperand const & rhs ) const
 		{
-			
+			std::string		value;
+			eOperandType	type;
+			OperandFactory	Factory;
+
+			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
+			value = std::to_string(this->_value - stod(rhs.toString(), 0));
+			return (Factory.createOperand(type, value));
 		}
 		
 		IOperand const * operator*( IOperand const & rhs ) const
 		{
-			
+			std::string		value;
+			eOperandType	type;
+			OperandFactory	Factory;
+
+			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
+			value = std::to_string(this->_value * stod(rhs.toString(), 0));
+			return (Factory.createOperand(type, value));
 		}
 		
 		IOperand const * operator/( IOperand const & rhs ) const
 		{
-			
+			std::string		value;
+			eOperandType	type;
+			OperandFactory	Factory;
+
+			if (!stod(rhs.toString(), NULL))
+				throw ("Error : Division by 0");
+			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
+			value = std::to_string(this->_value / stod(rhs.toString(), 0));
+			return (Factory.createOperand(type, value));
 		}
 
 		IOperand const * operator%( IOperand const & rhs ) const
 		{
-			
+			std::string		value;
+			eOperandType	type;
+			OperandFactory	Factory;
+
+			if (!stod(rhs.toString(), NULL))
+				throw ("Error : Modulo by 0");
+			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
+			value = std::to_string(fmod(this->_value , stod(rhs.toString(), 0)));
+			return (Factory.createOperand(type, value));
 		}
 
 		std::string const & toString( void ) const

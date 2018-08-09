@@ -17,9 +17,7 @@ CC = clang++
 CFLAGS = -Wall -Wextra -Werror
 
 SRC = 	./src/main.cpp \
-	./src/VM.cpp \
-	./src/OperandFactory.cpp \
-	./src/Parser.cpp
+		./src/VM.cpp
 
 OBJS =	$(SRC:.cpp=.o)
 

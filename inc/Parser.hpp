@@ -6,15 +6,14 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/01 15:53:29 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/08 15:20:55 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/09 10:37:09 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef PARSER_HPP
+# define PARSER_HPP
 
-#include <string>
-#include <Operand.hpp>
+#include "Operand.hpp"
 
 class Parser {
 
@@ -22,9 +21,9 @@ class Parser {
 		std::string _instruction;
 
 	public:
-		Parser(std::string instruct);
+		Parser(std::string instruction);
 
-		void setInstruction(std::string const instruction);
+		void setInstruction(std::string instruction);
 		
 };
 
