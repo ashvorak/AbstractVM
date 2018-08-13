@@ -6,7 +6,7 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/01 14:39:46 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/09 10:32:38 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/13 13:45:54 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,28 @@ void	VM::print( void )
 		throw ErrorException("Error : Can't print (incompetiple type)");
 	else
 		std::cout << static_cast<char>(stoi(this->_stack.back()->toString())) << std::endl;
+}
+
+void	VM::launch( void )
+{
+	this->operation[1] = &VM::pop;
+	this->operation[2] = &VM::dump;
+	this->operation[4] = &VM::add;
+	this->operation[5] = &VM::sub;
+	this->operation[6] = &VM::mul;
+	handle(Add);
+}
+
+void	VM::handle(eInstruction instruction)
+{
+	try
+	{
+		(this->*operation[instruction])();
+	}
+	catch (std::exception & e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 }
 
 VM::ErrorException::ErrorException() {}

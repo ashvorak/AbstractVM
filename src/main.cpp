@@ -6,7 +6,7 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 17:52:29 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/08 19:05:55 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/13 13:58:35 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int main(int arc, char **argv)
 {
 	VM vm;
 
+	arc = 1;
+	*argv = NULL;
 	OperandFactory Factory;
 
 	IOperand const *a = Factory.createOperand(Int8, "42");
@@ -25,8 +27,8 @@ int main(int arc, char **argv)
 	IOperand const *x = Factory.createOperand(Int8, "42");
 	IOperand const *y = Factory.createOperand(Int8, "42");
 
-	vm.push(b);
 	vm.push(a);
+	vm.push(b);
 	vm.push(c);
 	vm.push(d);
 	vm.push(x);
@@ -34,13 +36,7 @@ int main(int arc, char **argv)
 
 	vm.dump();
 
-	std::cout << "-------" << std::endl;
-
-	vm.print();
-
-	vm.assert("42", Int8);
-
-	vm.mul();
+	vm.launch();
 
 	vm.dump();
 

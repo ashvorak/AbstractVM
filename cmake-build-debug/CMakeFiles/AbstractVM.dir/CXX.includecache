@@ -19,6 +19,8 @@ OperandFactory.hpp
 /Users/oshvorak/AbstractVM/inc/OperandFactory.hpp
 
 /Users/oshvorak/AbstractVM/inc/OperandFactory.hpp
+map
+-
 IOperand.hpp
 /Users/oshvorak/AbstractVM/inc/IOperand.hpp
 

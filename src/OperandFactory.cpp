@@ -6,12 +6,14 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/08 15:24:06 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/09 10:21:35 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/13 14:11:38 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/OperandFactory.hpp"
 #include "../inc/Operand.hpp"
+
+typedef IOperand const * (OperandFactory:: *createValue)(std::string const & value) const;
 
 IOperand const * OperandFactory::createInt8( std::string const & value ) const
 {
@@ -40,14 +42,11 @@ IOperand const * OperandFactory::createDouble( std::string const & value ) const
 
 IOperand const * OperandFactory::createOperand( eOperandType type, std::string const & value ) const
 {
-	IOperand const * (OperandFactory:: *createValue[5])(std::string const & value) const = {&OperandFactory::createInt8, 
-																							&OperandFactory::createInt16,
-																							&OperandFactory::createInt32,
-																							&OperandFactory::createFloat,
-																							&OperandFactory::createDouble};
-	eOperandType createType[5] = {Int8, Int16, Int32, Float, Double};
-	for (int i = 0; i < 5; i++)
-		if (createType[i] == type)						 
-			return ((this->*(createValue[type]))(value));
+	static std::map <eOperandType, createValue > myMap =  {{Int8,   &OperandFactory::createInt8},
+														   {Int16,  &OperandFactory::createInt16},
+														   {Int32,  &OperandFactory::createInt32},
+														   {Float,  &OperandFactory::createFloat},
+														   {Double, &OperandFactory::createDouble}};
+	return (this->*(myMap[type]))(value);
 }
 

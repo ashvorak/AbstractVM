@@ -14,7 +14,7 @@ NAME = avm
 
 CC = clang++
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -std=c++11
 
 SRC = 	./src/main.cpp \
 	./src/VM.cpp \

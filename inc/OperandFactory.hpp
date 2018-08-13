@@ -6,13 +6,14 @@
 /*   By: oshvorak <oshvorak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/08 15:20:58 by oshvorak          #+#    #+#             */
-/*   Updated: 2018/08/08 18:50:17 by oshvorak         ###   ########.fr       */
+/*   Updated: 2018/08/13 14:07:54 by oshvorak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OPERAND_FACTORY_HPP
 # define OPERAND_FACTORY_HPP
 
+#include <map>
 #include "IOperand.hpp"
 
 class OperandFactory {
