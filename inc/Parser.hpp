@@ -24,6 +24,7 @@ class Parser {
 		Parser(std::string instruction);
 
 		void setInstruction(std::string instruction);
+		eInstruction & parse(std::string instruction);
 		
 };
 

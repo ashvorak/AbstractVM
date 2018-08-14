@@ -14,14 +14,7 @@
 # define IOPERAND_HPP
 
 #include <string>
-
-enum eOperandType {
-	Int8,
-	Int16,
-	Int32,
-	Float,
-	Double
-};
+#include "AbstractVM.hpp"
 
 class IOperand {
 
