@@ -9,6 +9,7 @@ add_executable(AbstractVM
         inc/OperandFactory.hpp
         inc/Parser.hpp
         inc/VM.hpp
+        inc/AbstractVM.hpp
         src/main.cpp
         src/OperandFactory.cpp
         src/Parser.cpp

@@ -12,33 +12,21 @@
 
 #include "../inc/VM.hpp"
 
+static void ft_usage( void )
+{
+	std::cout << "Invalid number of arguments" << std::endl;
+	exit(1);
+}
+
 int main(int arc, char **argv)
 {
 	VM vm;
 
-	arc = 1;
-	*argv = NULL;
-	OperandFactory Factory;
+	if (arc <= 2)
+	{
 
-	IOperand const *a = Factory.createOperand(Int8, "42");
-	IOperand const *b = Factory.createOperand(Float, "42.42");
-	IOperand const *c = Factory.createOperand(Double, "142.142");
-	IOperand const *d = Factory.createOperand(Double, "41.142");
-	IOperand const *x = Factory.createOperand(Int8, "42");
-	IOperand const *y = Factory.createOperand(Int8, "42");
-
-	vm.push(a);
-	vm.push(b);
-	vm.push(c);
-	vm.push(d);
-	vm.push(x);
-	vm.push(y);
-
-	vm.dump();
-
-	vm.launch();
-
-	vm.dump();
-
+	}
+	else
+		ft_usage();
 	return (0);
 }

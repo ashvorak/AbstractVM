@@ -17,28 +17,14 @@
 #include <string>
 #include <vector>
 
+#include "Parser.hpp"
 #include "OperandFactory.hpp"
-
-# define OP_NUM 10
-
-enum eInstruction {
-	Push,
-	Pop,
-	Dump,
-	Assert,
-	Add,
-	Sub,
-	Mul,
-	Div,
-	Mod,
-	Exit
-};
 
 class VM {
 
 	private:
 		std::vector <IOperand const *> _stack;
-		void (VM:: *operation[OP_NUM])( void );
+		static std::map<eInstruction, oper> om;
 
 	public:
 		VM();
@@ -57,7 +43,7 @@ class VM {
 		void exit( void );
 
 		void launch();
-		void handle(eInstruction instruction);
+		void handle(eInstruction & instruction);
 
 	class ErrorException : public std::exception {
 

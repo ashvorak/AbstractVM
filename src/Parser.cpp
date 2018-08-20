@@ -16,3 +16,15 @@ void Parser::setInstruction(std::string instruction)
 {
 	this->_instruction = instruction;
 }
+
+eInstruction & Parser::parse(std::string instruction)
+{
+	if (instruction == "add")
+		return (Add);
+	else if (instruction == "mul")
+		return (Mul);
+	else if (instruction == "pop")
+		return (Pop);
+	else
+		throw "Error : Invalid instruction";
+}

@@ -80,6 +80,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/oshvorak/AbstractVM/inc/AbstractVM.hpp">
+			<Option target="AbstractVM"/>
+		</Unit>
 		<Unit filename="/Users/oshvorak/AbstractVM/inc/IOperand.hpp">
 			<Option target="AbstractVM"/>
 		</Unit>

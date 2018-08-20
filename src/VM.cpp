@@ -12,6 +12,16 @@
 
 #include "../inc/VM.hpp"
 
+std::map<eInstruction, oper> VM::om = {{Pop, &VM::pop},
+									   {Dump, &VM::dump},
+									   {Add, &VM::add},
+									   {Sub, &VM::sub},
+									   {Mul, &VM::mul},
+									   {Div, &VM::div},
+									   {Mod, &VM::mod},
+									   {Print, &VM::mul},
+									   {Exit, &VM::exit}};
+
 VM::VM()
 {
 
@@ -137,21 +147,23 @@ void	VM::print( void )
 		std::cout << static_cast<char>(stoi(this->_stack.back()->toString())) << std::endl;
 }
 
-void	VM::launch( void )
+void	VM::exit( void )
 {
-	this->operation[1] = &VM::pop;
-	this->operation[2] = &VM::dump;
-	this->operation[4] = &VM::add;
-	this->operation[5] = &VM::sub;
-	this->operation[6] = &VM::mul;
-	handle(Add);
+
 }
 
-void	VM::handle(eInstruction instruction)
+void	VM::launch( void )
+{
+	Parser pars("lol");
+
+	handle(Mul);
+}
+
+void	VM::handle(eInstruction & instruction)
 {
 	try
 	{
-		(this->*operation[instruction])();
+		(this->*om[instruction])();
 	}
 	catch (std::exception & e)
 	{

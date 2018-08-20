@@ -1,8 +1,20 @@
 
-#ifndef ABSTRACTVM_ABSTRACTVM_H
-#define ABSTRACTVM_ABSTRACTVM_H
+#ifndef ABSTRACTVM_H
+#define ABSTRACTVM_H
 
-enum eCommand {
+class VM;
+class IOperand;
+class OperandFactory;
+
+enum eOperandType {
+    Int8,
+    Int16,
+    Int32,
+    Float,
+    Double
+};
+
+enum eInstruction {
 	Push,
 	Pop,
 	Dump,
@@ -12,8 +24,11 @@ enum eCommand {
 	Mul,
 	Div,
 	Mod,
+    Print,
 	Exit
 };
 
+typedef void (VM:: *oper)( void );
+typedef IOperand const * (OperandFactory:: *createValue)(std::string const & value) const;
 
 #endif
