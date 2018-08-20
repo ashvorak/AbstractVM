@@ -15,23 +15,23 @@
 
 IOperand const * Parser::value = NULL;
 
-eInstruction Parser::parse(std::string instruction)
+eInstruction Parser::parse(std::string line)
 {
 	OperandFactory F;
 
-	if (instruction == "add")
+	if (line == "add")
 		return (Add);
-	else if (instruction == "mul")
+	else if (line == "mul")
 		return (Mul);
-	else if (instruction == "pop")
+	else if (line == "pop")
 		return (Pop);
-	else if (instruction == "dump")
+	else if (line == "dump")
 		return (Dump);
-	else if (instruction == "push")
+	else if (line == "push")
 	{
 		Parser::value = F.createOperand(Int8, "42");
 		return (Push);
 	}
 	else
-		throw "Invalid instruction";
+		throw "Invalid line";
 }

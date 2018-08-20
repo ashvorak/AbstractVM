@@ -13,8 +13,6 @@
 #include "../inc/OperandFactory.hpp"
 #include "../inc/Operand.hpp"
 
-typedef IOperand const * (OperandFactory:: *createValue)(std::string const & value) const;
-
 IOperand const * OperandFactory::createInt8( std::string const & value ) const
 {
 	return ( new Operand<int8_t>(atoi(value.c_str()), value, Int8, 0) );
@@ -49,4 +47,3 @@ IOperand const * OperandFactory::createOperand( eOperandType type, std::string c
 														   {Double, &OperandFactory::createDouble}};
 	return (this->*(myMap[type]))(value);
 }
-

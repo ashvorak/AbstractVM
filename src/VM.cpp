@@ -207,7 +207,7 @@ void	VM::execute(eInstruction instruction)
 	{
 		(this->*_om[instruction])();
 	}
-	catch (std::exception & e)
+	catch (ErrorException & e)
 	{
 		this->_ss	<< "Error"
 					<< "[Line:" << this->_count_line << "]->"
