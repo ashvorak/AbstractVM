@@ -16,6 +16,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
+#include <fstream>
 
 #include "Parser.hpp"
 #include "OperandFactory.hpp"
@@ -23,17 +25,19 @@
 class VM {
 
 	private:
-		std::vector <IOperand const *> _stack;
-		static std::map<eInstruction, oper> om;
+		std::vector <IOperand const *> 		_stack;
+		static std::map<eInstruction, oper> _om;
+		std::stringstream					_ss;
+		unsigned long						_count_line;
 
 	public:
 		VM();
 		~VM();
 
-		void push( IOperand const * value );
+		void push( void );
 		void pop( void );
 		void dump( void );
-		void assert(std::string const & value, eOperandType type);
+		void assert( void );
 		void add( void );
 		void sub( void );
 		void mul( void );
@@ -42,8 +46,11 @@ class VM {
 		void print( void );
 		void exit( void );
 
-		void launch();
-		void handle(eInstruction & instruction);
+		void handleSI( void );
+		void handleFile(const char *file_name);
+
+		void handleInstruction(std::string & line);
+		void execute(eInstruction instruction);
 
 	class ErrorException : public std::exception {
 

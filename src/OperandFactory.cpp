@@ -39,7 +39,7 @@ IOperand const * OperandFactory::createDouble( std::string const & value ) const
 {
 	return ( new Operand<double>(stod(value), value, Double, 0) );
 }
-
+//limits
 IOperand const * OperandFactory::createOperand( eOperandType type, std::string const & value ) const
 {
 	static std::map <eOperandType, createValue > myMap =  {{Int8,   &OperandFactory::createInt8},

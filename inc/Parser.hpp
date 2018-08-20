@@ -15,16 +15,15 @@
 
 #include "Operand.hpp"
 
+class VM;
+
 class Parser {
 
-	private:
-		std::string _instruction;
-
 	public:
-		Parser(std::string instruction);
 
-		void setInstruction(std::string instruction);
-		eInstruction & parse(std::string instruction);
+		static IOperand const * value;
+
+		eInstruction parse(std::string instruction);
 		
 };
 

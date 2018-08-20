@@ -12,19 +12,21 @@
 
 #include "../inc/VM.hpp"
 
-std::map<eInstruction, oper> VM::om = {{Pop, &VM::pop},
-									   {Dump, &VM::dump},
-									   {Add, &VM::add},
-									   {Sub, &VM::sub},
-									   {Mul, &VM::mul},
-									   {Div, &VM::div},
-									   {Mod, &VM::mod},
-									   {Print, &VM::mul},
-									   {Exit, &VM::exit}};
+std::map<eInstruction, oper> VM::_om = {   {Push, &VM::push},
+										   {Pop, &VM::pop},
+										   {Dump, &VM::dump},
+										   {Assert, &VM::assert},
+										   {Add, &VM::add},
+										   {Sub, &VM::sub},
+										   {Mul, &VM::mul},
+										   {Div, &VM::div},
+										   {Mod, &VM::mod},
+										   {Print, &VM::print},
+										   {Exit, &VM::exit}};
 
 VM::VM()
 {
-
+	this->_count_line = 1;
 }
 
 VM::~VM()
@@ -33,15 +35,15 @@ VM::~VM()
 		delete this->_stack[i];
 }
 
-void VM::push(IOperand const * value)
+void VM::push( void )
 {
-	this->_stack.push_back(value);
+	this->_stack.push_back(Parser::value);
 }
 
 void VM::pop( void )
 {
 	if (this->_stack.empty())
-		throw ErrorException("Error : Pop on empty stack");
+		throw ErrorException("Pop on empty stack");
 	delete this->_stack.back();
 	this->_stack.pop_back();
 }
@@ -52,16 +54,16 @@ void	VM::dump( void )
 	
 	for(it = this->_stack.end() - 1; it >= this->_stack.begin(); it--)
 	{
-    	std::cout << (*it)->toString() << std::endl;
+    	this->_ss << (*it)->toString() << std::endl;
 	}
 }
 
-void	VM::assert(std::string const & value, eOperandType type)
+void	VM::assert( void )
 {
 	if (this->_stack.empty())
-		throw ErrorException("Error : Assert on empty stack");
-	if (this->_stack.back()->getType() != type || stod(this->_stack.back()->toString(), 0) != stod(value, 0))
-		throw ErrorException("Error : Assert instruction is not true");
+		throw ErrorException("Assert on empty stack");
+	if (this->_stack.back()->getType() != Parser::value->getType() || stod(this->_stack.back()->toString(), 0) != stod(Parser::value->toString(), 0))
+		throw ErrorException("Assert instruction is not true");
 }
 
 void	VM::add()
@@ -70,7 +72,7 @@ void	VM::add()
 	unsigned long	size = this->_stack.size();
 
 	if (this->_stack.size() < 2)
-		throw ErrorException("Error : Instruction 'add' when less that two values.");
+		throw ErrorException("Instruction 'add' when less that two values.");
 	value = *(this->_stack[size - 1]) + *(this->_stack[size - 2]);
 	delete this->_stack.back();
 	this->_stack.pop_back();
@@ -85,7 +87,7 @@ void	VM::sub()
 	IOperand const	*value;
 
 	if (this->_stack.size() < 2)
-		throw ErrorException("Error : Instruction 'sub' when less that two values.");
+		throw ErrorException("Instruction 'sub' when less that two values.");
 	value = *(this->_stack[this->_stack.size() - 1]) - *(this->_stack[this->_stack.size() - 2]);
 	delete this->_stack.back();
 	this->_stack.pop_back();
@@ -100,7 +102,7 @@ void	VM::mul()
 	IOperand const	*value;
 
 	if (this->_stack.size() < 2)
-		throw ErrorException("Error : Instruction 'mul' when less that two values.");
+		throw ErrorException("Instruction 'mul' when less that two values.");
 	value = *(this->_stack[this->_stack.size() - 1]) * *(this->_stack[this->_stack.size() - 2]);
 	delete this->_stack.back();
 	this->_stack.pop_back();
@@ -114,7 +116,7 @@ void	VM::div()
 	IOperand const	*value;
 
 	if (this->_stack.size() < 2)
-		throw ErrorException("Error : Instruction 'div' when less that two values.");
+		throw ErrorException("Instruction 'div' when less that two values.");
 	value = *(this->_stack[this->_stack.size() - 1]) / *(this->_stack[this->_stack.size() - 2]);
 	delete this->_stack.back();
 	this->_stack.pop_back();
@@ -128,7 +130,7 @@ void	VM::mod()
 	IOperand const	*value;
 
 	if (this->_stack.size() < 2)
-		throw ErrorException("Error : Instruction 'mod' when less that two values.");
+		throw ErrorException("Instruction 'mod' when less that two values.");
 	value = *(this->_stack[this->_stack.size() - 1]) / *(this->_stack[this->_stack.size() - 2]);
 	delete this->_stack.back();
 	this->_stack.pop_back();
@@ -140,9 +142,9 @@ void	VM::mod()
 void	VM::print( void )
 {
 	if (this->_stack.empty())
-		throw ErrorException("Error : Print on empty stack");
+		throw ErrorException("Print on empty stack");
 	else if (this->_stack.back()->getType() != Int8)
-		throw ErrorException("Error : Can't print (incompetiple type)");
+		throw ErrorException("Can't print (incompetiple type)");
 	else
 		std::cout << static_cast<char>(stoi(this->_stack.back()->toString())) << std::endl;
 }
@@ -152,22 +154,65 @@ void	VM::exit( void )
 
 }
 
-void	VM::launch( void )
+void	VM::handleSI( void )
 {
-	Parser pars("lol");
+	std::string line;
 
-	handle(Mul);
+	while (getline(std::cin, line))
+		handleInstruction(line);
+	std::cout << this->_ss.str();
 }
 
-void	VM::handle(eInstruction & instruction)
+void	VM::handleFile(const char *file_name)
+{
+	std::string line;
+	std::ifstream ifs(file_name);
+
+	try
+	{
+		if (!ifs.is_open())
+			throw "Error : Can't open FILE";
+		while (getline(ifs, line))
+			handleInstruction(line);
+	}
+	catch (const char *s)
+	{
+		std::cout << s << std::endl;
+	}
+	std::cout << this->_ss.str();
+
+}
+
+void	VM::handleInstruction(std::string &line)
+{
+	Parser p;
+
+	try
+	{
+		execute(p.parse(line));
+	}
+	catch (const char *s)
+	{
+		this->_ss	<< "Error"
+					 << "[Line:" << this->_count_line << "]->"
+					 << s
+					 << std::endl;
+	}
+	this->_count_line++;
+}
+
+void	VM::execute(eInstruction instruction)
 {
 	try
 	{
-		(this->*om[instruction])();
+		(this->*_om[instruction])();
 	}
 	catch (std::exception & e)
 	{
-		std::cout << e.what() << std::endl;
+		this->_ss	<< "Error"
+					<< "[Line:" << this->_count_line << "]->"
+				  	<< e.what()
+				  	<< std::endl;
 	}
 }
 

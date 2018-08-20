@@ -14,17 +14,22 @@
 
 static void ft_usage( void )
 {
-	std::cout << "Invalid number of arguments" << std::endl;
+	std::cout << "USAGE :";
+	std::cout << " ./avm" << std::endl;
+	std::cout << "        ./avm <filename>" << std::endl;
 	exit(1);
 }
 
-int main(int arc, char **argv)
+int main(int argc, char **argv)
 {
-	VM vm;
+	VM 			vm;
 
-	if (arc <= 2)
+	if (argc <= 2)
 	{
-
+		if (argc == 1)
+			vm.handleSI();
+		else
+			vm.handleFile(argv[1]);
 	}
 	else
 		ft_usage();

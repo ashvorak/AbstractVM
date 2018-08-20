@@ -11,20 +11,27 @@
 /* ************************************************************************** */
 
 #include "../inc/Parser.hpp"
+#include "../inc/VM.hpp"
 
-void Parser::setInstruction(std::string instruction)
-{
-	this->_instruction = instruction;
-}
+IOperand const * Parser::value = NULL;
 
-eInstruction & Parser::parse(std::string instruction)
+eInstruction Parser::parse(std::string instruction)
 {
+	OperandFactory F;
+
 	if (instruction == "add")
 		return (Add);
 	else if (instruction == "mul")
 		return (Mul);
 	else if (instruction == "pop")
 		return (Pop);
+	else if (instruction == "dump")
+		return (Dump);
+	else if (instruction == "push")
+	{
+		Parser::value = F.createOperand(Int8, "42");
+		return (Push);
+	}
 	else
-		throw "Error : Invalid instruction";
+		throw "Invalid instruction";
 }
