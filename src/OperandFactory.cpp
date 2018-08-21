@@ -13,6 +13,12 @@
 #include "../inc/OperandFactory.hpp"
 #include "../inc/Operand.hpp"
 
+std::map< eOperandType, createValue > OperandFactory::_m =  {{Int8,   &OperandFactory::createInt8},
+															 {Int16,  &OperandFactory::createInt16},
+															 {Int32,  &OperandFactory::createInt32},
+															 {Float,  &OperandFactory::createFloat},
+															 {Double, &OperandFactory::createDouble}};
+
 IOperand const * OperandFactory::createInt8( std::string const & value ) const
 {
 	return ( new Operand<int8_t>(atoi(value.c_str()), value, Int8, 0) );
@@ -37,13 +43,8 @@ IOperand const * OperandFactory::createDouble( std::string const & value ) const
 {
 	return ( new Operand<double>(stod(value), value, Double, 0) );
 }
-//limits
+
 IOperand const * OperandFactory::createOperand( eOperandType type, std::string const & value ) const
 {
-	static std::map <eOperandType, createValue > myMap =  {{Int8,   &OperandFactory::createInt8},
-														   {Int16,  &OperandFactory::createInt16},
-														   {Int32,  &OperandFactory::createInt32},
-														   {Float,  &OperandFactory::createFloat},
-														   {Double, &OperandFactory::createDouble}};
-	return (this->*(myMap[type]))(value);
+	return (this->*(_m[type]))(value);
 }

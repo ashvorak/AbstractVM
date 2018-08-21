@@ -28,8 +28,15 @@ class Operand : public IOperand {
 
 	public:
 
-		Operand<T>(T value, std::string str, eOperandType type, int precision) 
+		Operand<T>(T value, std::string str, eOperandType type, int precision)
 		{
+			long double x;
+
+			x = stold(str);
+			if (x > std::numeric_limits<T>::max())
+				throw OverflowException();
+			else if (x < std::numeric_limits<T>::min())
+				throw UnderflowException();
 			this->_value = value;
 			this->_str = str;
 			this->_type = type;
@@ -84,7 +91,7 @@ class Operand : public IOperand {
 			OperandFactory	Factory;
 
 			if (!stod(rhs.toString(), NULL))
-				throw ("Error : Division by 0");
+				throw ZeroException("Division by 0");
 			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
 			value = std::to_string(this->_value / stod(rhs.toString(), 0));
 			return (Factory.createOperand(type, value));
@@ -97,7 +104,7 @@ class Operand : public IOperand {
 			OperandFactory	Factory;
 
 			if (!stod(rhs.toString(), NULL))
-				throw ("Error : Modulo by 0");
+				throw ZeroException("Modulo by 0");
 			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
 			value = std::to_string(fmod(this->_value , stod(rhs.toString(), 0)));
 			return (Factory.createOperand(type, value));
@@ -107,7 +114,51 @@ class Operand : public IOperand {
 		{
 			return (this->_str);
 		}
-		
+
+		class OverflowException : public std::exception
+		{
+
+			public:
+				OverflowException() {}
+				~OverflowException() throw() {}
+
+				virtual const char *what() const throw()
+				{
+					return ("Overflow value");
+				}
+
+		};
+
+		class UnderflowException : public std::exception
+		{
+
+			public:
+				UnderflowException() {}
+				~UnderflowException() throw() {}
+
+				virtual const char *what() const throw()
+				{
+					return ("Underflow value");
+				}
+		};
+
+		class ZeroException : public std::exception
+		{
+
+			private:
+				std::string _message;
+
+			public:
+				ZeroException() {}
+				ZeroException(std::string message) { this->_message = message; }
+				~ZeroException() throw() {}
+
+				virtual const char *what() const throw()
+				{
+					return (this->_message.c_str());
+				}
+			};
+
 		~Operand( void ) {}
 		
 };

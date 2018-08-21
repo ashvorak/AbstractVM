@@ -62,18 +62,28 @@ void	VM::assert( void )
 {
 	if (this->_stack.empty())
 		throw ErrorException("Assert on empty stack");
-	if (this->_stack.back()->getType() != Parser::value->getType() || stod(this->_stack.back()->toString(), 0) != stod(Parser::value->toString(), 0))
+	if (this->_stack.back()->getType() != Parser::value->getType() || stod(this->_stack.back()->toString()) != stod(Parser::value->toString()))
 		throw ErrorException("Assert instruction is not true");
 }
 
 void	VM::add()
 {
 	IOperand const	*value;
-	unsigned long	size = this->_stack.size();
 
 	if (this->_stack.size() < 2)
 		throw ErrorException("Instruction 'add' when less that two values.");
-	value = *(this->_stack[size - 1]) + *(this->_stack[size - 2]);
+	try
+	{
+		value = *(this->_stack[this->_stack.size() - 1]) + *(this->_stack[this->_stack.size() - 2]);
+	}
+	catch (std::exception & e)
+	{
+		this->_ss	<< "Error"
+					 << "[Line:" << this->_count_line << "]->"
+					 << e.what()
+					 << std::endl;
+		return ;
+	}
 	delete this->_stack.back();
 	this->_stack.pop_back();
 	delete this->_stack.back();
@@ -88,13 +98,23 @@ void	VM::sub()
 
 	if (this->_stack.size() < 2)
 		throw ErrorException("Instruction 'sub' when less that two values.");
-	value = *(this->_stack[this->_stack.size() - 1]) - *(this->_stack[this->_stack.size() - 2]);
+	try
+	{
+		value = *(this->_stack[this->_stack.size() - 1]) - *(this->_stack[this->_stack.size() - 2]);
+	}
+	catch (std::exception & e)
+	{
+		this->_ss	<< "Error"
+					 << "[Line:" << this->_count_line << "]->"
+					 << e.what()
+					 << std::endl;
+		return ;
+	}
 	delete this->_stack.back();
 	this->_stack.pop_back();
 	delete this->_stack.back();
 	this->_stack.pop_back();
 	this->_stack.push_back(value);
-
 }
 
 void	VM::mul()
@@ -103,7 +123,18 @@ void	VM::mul()
 
 	if (this->_stack.size() < 2)
 		throw ErrorException("Instruction 'mul' when less that two values.");
-	value = *(this->_stack[this->_stack.size() - 1]) * *(this->_stack[this->_stack.size() - 2]);
+	try
+	{
+		value = *(this->_stack[this->_stack.size() - 1]) * *(this->_stack[this->_stack.size() - 2]);
+	}
+	catch (std::exception & e)
+	{
+		this->_ss	<< "Error"
+					 << "[Line:" << this->_count_line << "]->"
+					 << e.what()
+					 << std::endl;
+		return ;
+	}
 	delete this->_stack.back();
 	this->_stack.pop_back();
 	delete this->_stack.back();
@@ -117,7 +148,18 @@ void	VM::div()
 
 	if (this->_stack.size() < 2)
 		throw ErrorException("Instruction 'div' when less that two values.");
-	value = *(this->_stack[this->_stack.size() - 1]) / *(this->_stack[this->_stack.size() - 2]);
+	try
+	{
+		value = *(this->_stack[this->_stack.size() - 1]) / *(this->_stack[this->_stack.size() - 2]);
+	}
+	catch (std::exception & e)
+	{
+		this->_ss	<< "Error"
+					 << "[Line:" << this->_count_line << "]->"
+					 << e.what()
+					 << std::endl;
+		return ;
+	}
 	delete this->_stack.back();
 	this->_stack.pop_back();
 	delete this->_stack.back();
@@ -131,7 +173,18 @@ void	VM::mod()
 
 	if (this->_stack.size() < 2)
 		throw ErrorException("Instruction 'mod' when less that two values.");
-	value = *(this->_stack[this->_stack.size() - 1]) / *(this->_stack[this->_stack.size() - 2]);
+	try
+	{
+		value = *(this->_stack[this->_stack.size() - 1]) % *(this->_stack[this->_stack.size() - 2]);
+	}
+	catch (std::exception & e)
+	{
+		this->_ss	<< "Error"
+					 << "[Line:" << this->_count_line << "]->"
+					 << e.what()
+					 << std::endl;
+		return ;
+	}
 	delete this->_stack.back();
 	this->_stack.pop_back();
 	delete this->_stack.back();
@@ -171,13 +224,13 @@ void	VM::handleFile(const char *file_name)
 	try
 	{
 		if (!ifs.is_open())
-			throw "Error : Can't open FILE";
+			throw ErrorException("Can't open FILE");
 		while (getline(ifs, line))
 			handleInstruction(line);
 	}
-	catch (const char *s)
+	catch (ErrorException & e)
 	{
-		std::cout << s << std::endl;
+		std::cout << e.what() << std::endl;
 	}
 	std::cout << this->_ss.str();
 

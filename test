@@ -2,5 +2,6 @@ push
 add
 push
 mull
-mul
+add
+add
 dump

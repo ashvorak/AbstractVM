@@ -29,7 +29,7 @@ eInstruction Parser::parse(std::string line)
 		return (Dump);
 	else if (line == "push")
 	{
-		Parser::value = F.createOperand(Int8, "42");
+		Parser::value = F.createOperand(Int8, "65");
 		return (Push);
 	}
 	else

@@ -15,8 +15,12 @@
 
 #include <map>
 #include "IOperand.hpp"
+#include <limits>
 
 class OperandFactory {
+
+	private:
+		static std::map <eOperandType, createValue > _m;
 
 	public:
 		IOperand const * createInt8( std::string const & value ) const;
@@ -26,6 +30,7 @@ class OperandFactory {
 		IOperand const * createDouble( std::string const & value ) const;
 
 		IOperand const * createOperand( eOperandType type, std::string const & value ) const;
+
 };
 
 #endif
