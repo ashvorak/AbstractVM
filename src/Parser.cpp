@@ -15,23 +15,32 @@
 
 IOperand const * Parser::value = NULL;
 
-eInstruction Parser::parse(std::string line)
+std::map<std::string, eInstruction > Parser::_pm = {{"add", Add},
+													{"sub", Sub},
+													{"mul", Mul},
+													{"div", Div},
+													{"dump", Dump}};
+
+eInstruction  Parser::parse(std::string line)
 {
 	OperandFactory F;
 
-	if (line == "add")
-		return (Add);
-	else if (line == "mul")
-		return (Mul);
-	else if (line == "pop")
-		return (Pop);
-	else if (line == "dump")
-		return (Dump);
-	else if (line == "push")
-	{
-		Parser::value = F.createOperand(Int8, "65");
-		return (Push);
-	}
-	else
-		throw "Invalid line";
+	lexicalAnalysis(line);
+	return _pm[line];
+}
+
+std::string		Parser::lexicalAnalysis(std::string instr)
+{
+	std::regex rx("^add$|^sub$|^mul$|^div$|^dump$");
+	if (!regex_match(instr.begin(), instr.end(), rx))
+		throw ValidException();
+	return (instr);
+}
+
+Parser::ValidException::ValidException() {}
+Parser::ValidException::~ValidException() throw() {}
+
+const char* Parser::ValidException::what() const throw()
+{
+	return ("Invalid instruction");
 }

@@ -13,6 +13,9 @@
 #ifndef ABSTRACTVM_H
 #define ABSTRACTVM_H
 
+#include <map>
+#include <string>
+
 class VM;
 class IOperand;
 class OperandFactory;

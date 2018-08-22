@@ -13,18 +13,34 @@
 #ifndef PARSER_HPP
 # define PARSER_HPP
 
+#include "AbstractVM.hpp"
 #include "Operand.hpp"
+#include "regex"
 
 class VM;
 
 class Parser {
 
+	private:
+		static std::map<std::string, eInstruction > _pm;
+
 	public:
 
 		static IOperand const * value;
 
-		eInstruction parse(std::string instruction);
-		
+		eInstruction 	parse(std::string instruction);
+		std::string		lexicalAnalysis(std::string instruction);
+
+		class ValidException : public std::exception {
+
+		public:
+			ValidException();
+			~ValidException() throw();
+
+			virtual const char *what() const throw();
+
+		};
+
 };
 
 #endif

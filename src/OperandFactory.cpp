@@ -21,27 +21,27 @@ std::map< eOperandType, createValue > OperandFactory::_m =  {{Int8,   &OperandFa
 
 IOperand const * OperandFactory::createInt8( std::string const & value ) const
 {
-	return ( new Operand<int8_t>(atoi(value.c_str()), value, Int8, 0) );
+	return ( new Operand<int8_t>(value, Int8, 0) );
 }
 
 IOperand const * OperandFactory::createInt16( std::string const & value ) const
 {
-	return ( new Operand<int16_t>(atoi(value.c_str()), value, Int16, 0) );
+	return ( new Operand<int16_t>(value, Int16, 0) );
 }
 
 IOperand const * OperandFactory::createInt32( std::string const & value ) const
 {
-	return ( new Operand<int32_t>(atoi(value.c_str()), value, Int32, 0) );
+	return ( new Operand<int32_t>(value, Int32, 0) );
 }
 
 IOperand const * OperandFactory::createFloat( std::string const & value ) const
 {
-	return ( new Operand<float>(stod(value), value, Float, 0) );
+	return ( new Operand<float>(value, Float, 7) );
 }
 
 IOperand const * OperandFactory::createDouble( std::string const & value ) const
 {
-	return ( new Operand<double>(stod(value), value, Double, 0) );
+	return ( new Operand<double>(value, Double, 14) );
 }
 
 IOperand const * OperandFactory::createOperand( eOperandType type, std::string const & value ) const

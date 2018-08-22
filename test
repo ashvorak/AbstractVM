@@ -1,7 +1,4 @@
-push
-add
-push
-mull
 add
 add
+mul
 dump

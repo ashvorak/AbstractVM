@@ -23,13 +23,19 @@ static void ft_usage( void )
 int main(int argc, char **argv)
 {
 	VM 			vm;
+	OperandFactory f;
 
 	if (argc <= 2)
 	{
 		if (argc == 1)
 			vm.handleSI();
 		else
+		{
+			Parser::value = f.createOperand(Float, "42.42");
+ 			vm.push();
+			vm.push();
 			vm.handleFile(argv[1]);
+		}
 	}
 	else
 		ft_usage();

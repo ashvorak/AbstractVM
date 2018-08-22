@@ -31,7 +31,7 @@ VM::VM()
 
 VM::~VM()
 {
-	for(int i = this->_stack.size() - 1; i >= 0 ; i--)
+	 for(int i = this->_stack.size() - 1; i >= 0 ; i--)
 		delete this->_stack[i];
 }
 
@@ -84,10 +84,10 @@ void	VM::add()
 					 << std::endl;
 		return ;
 	}
-	delete this->_stack.back();
 	this->_stack.pop_back();
 	delete this->_stack.back();
 	this->_stack.pop_back();
+	delete this->_stack.back();
 	this->_stack.push_back(value);
 
 }
@@ -110,10 +110,10 @@ void	VM::sub()
 					 << std::endl;
 		return ;
 	}
-	delete this->_stack.back();
 	this->_stack.pop_back();
 	delete this->_stack.back();
 	this->_stack.pop_back();
+	delete this->_stack.back();
 	this->_stack.push_back(value);
 }
 
@@ -135,10 +135,10 @@ void	VM::mul()
 					 << std::endl;
 		return ;
 	}
-	delete this->_stack.back();
 	this->_stack.pop_back();
 	delete this->_stack.back();
 	this->_stack.pop_back();
+	delete this->_stack.back();
 	this->_stack.push_back(value);
 }
 
@@ -160,10 +160,10 @@ void	VM::div()
 					 << std::endl;
 		return ;
 	}
-	delete this->_stack.back();
 	this->_stack.pop_back();
 	delete this->_stack.back();
 	this->_stack.pop_back();
+	delete this->_stack.back();
 	this->_stack.push_back(value);
 }
 
@@ -185,10 +185,10 @@ void	VM::mod()
 					 << std::endl;
 		return ;
 	}
-	delete this->_stack.back();
 	this->_stack.pop_back();
 	delete this->_stack.back();
 	this->_stack.pop_back();
+	delete this->_stack.back();
 	this->_stack.push_back(value);
 }
 

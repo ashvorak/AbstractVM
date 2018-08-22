@@ -21,14 +21,13 @@ template <typename T>
 class Operand : public IOperand {
 
 	private:
-		T 				_value;
 		std::string		_str;
 		int				_precision;
 		eOperandType 	_type;
 
 	public:
 
-		Operand<T>(T value, std::string str, eOperandType type, int precision)
+		Operand<T>(std::string str, eOperandType type, int precision)
 		{
 			long double x;
 
@@ -37,19 +36,13 @@ class Operand : public IOperand {
 				throw OverflowException();
 			else if (x < std::numeric_limits<T>::min())
 				throw UnderflowException();
-			this->_value = value;
-			this->_str = str;
+			this->_str = (type < Float) ? str.substr(0, str.find('.')) :  str;
 			this->_type = type;
 			this->_precision = precision;
 		}
-		
-		T & getValue( void ) { return (this->_value); }
+
 		int getPrecision( void ) const { return (this->_precision); }
 		eOperandType getType( void ) const { return (this->_type); }
-
-		void	setValue(T value) { this->_value = value; }
-		void	setPrecision(int precision) { this->_precision = precision; }
-		void	setType(eOperandType type) { this->_type = type; }
 
 		IOperand const * operator+( IOperand const & rhs ) const
 		{
@@ -58,7 +51,7 @@ class Operand : public IOperand {
 			OperandFactory	Factory;
 
 			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
-			value = std::to_string(this->_value + stod(rhs.toString(), 0));
+			value = std::to_string(stod(this->_str, 0) + stod(rhs.toString(), 0));
 			return (Factory.createOperand(type, value));
 		}
 		
@@ -69,7 +62,7 @@ class Operand : public IOperand {
 			OperandFactory	Factory;
 
 			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
-			value = std::to_string(this->_value - stod(rhs.toString(), 0));
+			value = std::to_string(stod(this->_str, 0) - stod(rhs.toString(), 0));
 			return (Factory.createOperand(type, value));
 		}
 		
@@ -80,7 +73,7 @@ class Operand : public IOperand {
 			OperandFactory	Factory;
 
 			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
-			value = std::to_string(this->_value * stod(rhs.toString(), 0));
+			value = std::to_string(stod(this->_str, 0) * stod(rhs.toString(), 0));
 			return (Factory.createOperand(type, value));
 		}
 		
@@ -93,7 +86,7 @@ class Operand : public IOperand {
 			if (!stod(rhs.toString(), NULL))
 				throw ZeroException("Division by 0");
 			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
-			value = std::to_string(this->_value / stod(rhs.toString(), 0));
+			value = std::to_string(stod(this->_str, 0) / stod(rhs.toString(), 0));
 			return (Factory.createOperand(type, value));
 		}
 
@@ -106,7 +99,7 @@ class Operand : public IOperand {
 			if (!stod(rhs.toString(), NULL))
 				throw ZeroException("Modulo by 0");
 			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
-			value = std::to_string(fmod(this->_value , stod(rhs.toString(), 0)));
+			value = std::to_string(fmod(stod(this->_str, 0) , stod(rhs.toString(), 0)));
 			return (Factory.createOperand(type, value));
 		}
 
