@@ -37,7 +37,9 @@ VM::~VM()
 
 void VM::push( void )
 {
-	this->_stack.push_back(Parser::value);
+	OperandFactory factory;
+
+	this->_stack.push_back(factory.createOperand(Parser::getType(), Parser::getValue()));
 }
 
 void VM::pop( void )
@@ -51,10 +53,13 @@ void VM::pop( void )
 void	VM::dump( void )
 {
 	std::vector<IOperand const *>::iterator it;
-	
-	for(it = this->_stack.end() - 1; it >= this->_stack.begin(); it--)
+
+	if (!this->_stack.empty())
 	{
-    	this->_ss << (*it)->toString() << std::endl;
+		for (it = this->_stack.end() - 1; it >= this->_stack.begin(); it--)
+		{
+			this->_ss << (*it)->toString() << std::endl;
+		}
 	}
 }
 
@@ -62,7 +67,7 @@ void	VM::assert( void )
 {
 	if (this->_stack.empty())
 		throw ErrorException("Assert on empty stack");
-	if (this->_stack.back()->getType() != Parser::value->getType() || stod(this->_stack.back()->toString()) != stod(Parser::value->toString()))
+	if (this->_stack.back()->getType() != Parser::getType() || stod(this->_stack.back()->toString()) != stod(Parser::getValue()))
 		throw ErrorException("Assert instruction is not true");
 }
 
@@ -228,7 +233,7 @@ void	VM::handleFile(const char *file_name)
 		while (getline(ifs, line))
 			handleInstruction(line);
 	}
-	catch (ErrorException & e)
+	catch (std::exception & e)
 	{
 		std::cout << e.what() << std::endl;
 	}
@@ -238,17 +243,19 @@ void	VM::handleFile(const char *file_name)
 
 void	VM::handleInstruction(std::string &line)
 {
+	eInstruction instr;
 	Parser p;
 
 	try
 	{
-		execute(p.parse(line));
+		instr = p.parse(line);
+		execute(instr);
 	}
-	catch (const char *s)
+	catch (std::exception & e)
 	{
 		this->_ss	<< "Error"
 					 << "[Line:" << this->_count_line << "]->"
-					 << s
+					 << e.what()
 					 << std::endl;
 	}
 	this->_count_line++;
@@ -260,7 +267,7 @@ void	VM::execute(eInstruction instruction)
 	{
 		(this->*_om[instruction])();
 	}
-	catch (ErrorException & e)
+	catch (std::exception & e)
 	{
 		this->_ss	<< "Error"
 					<< "[Line:" << this->_count_line << "]->"

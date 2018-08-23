@@ -30,12 +30,7 @@ int main(int argc, char **argv)
 		if (argc == 1)
 			vm.handleSI();
 		else
-		{
-			Parser::value = f.createOperand(Float, "42.42");
- 			vm.push();
-			vm.push();
 			vm.handleFile(argv[1]);
-		}
 	}
 	else
 		ft_usage();

@@ -23,13 +23,15 @@ class Parser {
 
 	private:
 		static std::map<std::string, eInstruction > _pm;
+		static eOperandType _type;
+		static std::string	_value;
 
 	public:
 
-		static IOperand const * value;
+		static eOperandType getType( void );
+		static std::string getValue( void );
 
-		eInstruction 	parse(std::string instruction);
-		std::string		lexicalAnalysis(std::string instruction);
+		eInstruction 	parse(std::string instr);
 
 		class ValidException : public std::exception {
 

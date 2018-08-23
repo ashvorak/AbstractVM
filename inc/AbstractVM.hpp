@@ -21,6 +21,7 @@ class IOperand;
 class OperandFactory;
 
 enum eOperandType {
+	None,
     Int8,
     Int16,
     Int32,
