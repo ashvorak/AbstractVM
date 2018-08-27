@@ -13,7 +13,6 @@
 #ifndef IOPERAND_HPP
 # define IOPERAND_HPP
 
-#include <string>
 #include "AbstractVM.hpp"
 
 class IOperand {

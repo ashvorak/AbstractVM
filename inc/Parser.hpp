@@ -32,6 +32,9 @@ class Parser {
 		static std::string getValue( void );
 
 		eInstruction 	parse(std::string instr);
+        std::string     parse_int(std::string instr);
+        std::string     parse_pointed(std::string instr);
+
 
 		class ValidException : public std::exception {
 

@@ -34,7 +34,7 @@ class Operand : public IOperand {
 			x = stold(str);
 			if (x > std::numeric_limits<T>::max())
 				throw OverflowException();
-			else if (x < std::numeric_limits<T>::min())
+			else if (x < std::numeric_limits<T>::lowest())
 				throw UnderflowException();
 			this->_str = (type < Float) ? str.substr(0, str.find('.')) :  str;
 			this->_type = type;
