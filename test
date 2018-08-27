@@ -1,7 +1,10 @@
 add
 dump
-push double(5.6657)
-push float(5.557656)
-push int32(5)
-push int32(5)
+assert int32(5)
+push int8(-5)
+push int8(5)
+assert int32(5)
+push double(-5.6657)
+assert int32(5)
+push float(-5.5)
 dump

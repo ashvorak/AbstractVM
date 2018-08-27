@@ -4,10 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/oshvorak/AbstractVM/src/OperandFactory.cpp" "/Users/oshvorak/AbstractVM/cmake-build-debug/CMakeFiles/AbstractVM.dir/src/OperandFactory.cpp.o"
-  "/Users/oshvorak/AbstractVM/src/Parser.cpp" "/Users/oshvorak/AbstractVM/cmake-build-debug/CMakeFiles/AbstractVM.dir/src/Parser.cpp.o"
-  "/Users/oshvorak/AbstractVM/src/VM.cpp" "/Users/oshvorak/AbstractVM/cmake-build-debug/CMakeFiles/AbstractVM.dir/src/VM.cpp.o"
-  "/Users/oshvorak/AbstractVM/src/main.cpp" "/Users/oshvorak/AbstractVM/cmake-build-debug/CMakeFiles/AbstractVM.dir/src/main.cpp.o"
+  "/Users/aleksej/Documents/UNIT/AbstractVM/src/OperandFactory.cpp" "/Users/aleksej/Documents/UNIT/AbstractVM/cmake-build-debug/CMakeFiles/AbstractVM.dir/src/OperandFactory.cpp.o"
+  "/Users/aleksej/Documents/UNIT/AbstractVM/src/Parser.cpp" "/Users/aleksej/Documents/UNIT/AbstractVM/cmake-build-debug/CMakeFiles/AbstractVM.dir/src/Parser.cpp.o"
+  "/Users/aleksej/Documents/UNIT/AbstractVM/src/VM.cpp" "/Users/aleksej/Documents/UNIT/AbstractVM/cmake-build-debug/CMakeFiles/AbstractVM.dir/src/VM.cpp.o"
+  "/Users/aleksej/Documents/UNIT/AbstractVM/src/main.cpp" "/Users/aleksej/Documents/UNIT/AbstractVM/cmake-build-debug/CMakeFiles/AbstractVM.dir/src/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
