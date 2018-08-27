@@ -4,12 +4,12 @@ project(AbstractVM)
 set(CMAKE_CXX_STANDARD 11)
 
 add_executable(AbstractVM
+        inc/AbstractVM.hpp
         inc/IOperand.hpp
         inc/Operand.hpp
         inc/OperandFactory.hpp
         inc/Parser.hpp
         inc/VM.hpp
-        inc/AbstractVM.hpp
         src/main.cpp
         src/OperandFactory.cpp
         src/Parser.cpp

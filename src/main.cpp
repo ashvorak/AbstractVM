@@ -23,7 +23,6 @@ static void ft_usage( void )
 int main(int argc, char **argv)
 {
 	VM 			vm;
-	OperandFactory f;
 
 	if (argc <= 2)
 	{

@@ -13,12 +13,6 @@
 #ifndef VM_H
 # define VM_H
 
-#include <iostream>
-#include <string>
-#include <vector>
-#include <sstream>
-#include <fstream>
-
 #include "Parser.hpp"
 #include "OperandFactory.hpp"
 
@@ -32,7 +26,10 @@ class VM {
 
 	public:
 		VM();
+		VM(const VM & copy);
 		~VM();
+
+		VM &operator =(VM const &src);
 
 		void push( void );
 		void pop( void );
@@ -44,7 +41,6 @@ class VM {
 		void div( void );
 		void mod( void );
 		void print( void );
-		void exit( void );
 
 		void handleSI( void );
 		void handleFile(const char *file_name);

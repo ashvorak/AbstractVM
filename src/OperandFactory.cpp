@@ -41,7 +41,7 @@ IOperand const * OperandFactory::createFloat( std::string const & value ) const
 
 IOperand const * OperandFactory::createDouble( std::string const & value ) const
 {
-	return ( new Operand<double>(value, Double, 14) );
+	return ( new Operand<double>(value, Double, 15) );
 }
 
 IOperand const * OperandFactory::createOperand( eOperandType type, std::string const & value ) const

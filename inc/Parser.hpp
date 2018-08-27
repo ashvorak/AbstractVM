@@ -28,6 +28,10 @@ class Parser {
 
 	public:
 
+		Parser();
+		Parser(const Parser &copy);
+		~Parser();
+
 		static eOperandType getType( void );
 		static std::string getValue( void );
 

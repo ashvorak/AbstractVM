@@ -21,18 +21,33 @@ std::map<eInstruction, oper> VM::_om = {   {Push, &VM::push},
 										   {Mul, &VM::mul},
 										   {Div, &VM::div},
 										   {Mod, &VM::mod},
-										   {Print, &VM::print},
-										   {Exit, &VM::exit}};
+										   {Print, &VM::print}};
 
 VM::VM()
 {
 	this->_count_line = 1;
 }
 
+VM::VM(const VM & copy)
+{
+	*this = copy;
+}
+
 VM::~VM()
 {
 	 for(int i = this->_stack.size() - 1; i >= 0 ; i--)
 		delete this->_stack[i];
+}
+
+VM & VM::operator=(VM const &src)
+{
+	if (this == &src)
+		return (*this);
+	this->_stack = src._stack;
+	this->_ss.str("");
+	this->_ss << src._ss.rdbuf();
+	this->_count_line = src._count_line;
+	return (*this);
 }
 
 void VM::push( void )
@@ -89,10 +104,10 @@ void	VM::add()
 					 << std::endl;
 		return ;
 	}
-	this->_stack.pop_back();
 	delete this->_stack.back();
 	this->_stack.pop_back();
 	delete this->_stack.back();
+	this->_stack.pop_back();
 	this->_stack.push_back(value);
 
 }
@@ -115,10 +130,10 @@ void	VM::sub()
 					 << std::endl;
 		return ;
 	}
-	this->_stack.pop_back();
 	delete this->_stack.back();
 	this->_stack.pop_back();
 	delete this->_stack.back();
+	this->_stack.pop_back();
 	this->_stack.push_back(value);
 }
 
@@ -140,10 +155,10 @@ void	VM::mul()
 					 << std::endl;
 		return ;
 	}
-	this->_stack.pop_back();
 	delete this->_stack.back();
 	this->_stack.pop_back();
 	delete this->_stack.back();
+	this->_stack.pop_back();
 	this->_stack.push_back(value);
 }
 
@@ -165,10 +180,10 @@ void	VM::div()
 					 << std::endl;
 		return ;
 	}
-	this->_stack.pop_back();
 	delete this->_stack.back();
 	this->_stack.pop_back();
 	delete this->_stack.back();
+	this->_stack.pop_back();
 	this->_stack.push_back(value);
 }
 
@@ -190,10 +205,10 @@ void	VM::mod()
 					 << std::endl;
 		return ;
 	}
-	this->_stack.pop_back();
 	delete this->_stack.back();
 	this->_stack.pop_back();
 	delete this->_stack.back();
+	this->_stack.pop_back();
 	this->_stack.push_back(value);
 }
 
@@ -204,12 +219,7 @@ void	VM::print( void )
 	else if (this->_stack.back()->getType() != Int8)
 		throw ErrorException("Can't print (incompetiple type)");
 	else
-		std::cout << static_cast<char>(stoi(this->_stack.back()->toString())) << std::endl;
-}
-
-void	VM::exit( void )
-{
-
+		this->_ss << static_cast<char>(stoi(this->_stack.back()->toString())) << std::endl;
 }
 
 void	VM::handleSI( void )
@@ -217,7 +227,34 @@ void	VM::handleSI( void )
 	std::string line;
 
 	while (getline(std::cin, line))
+	{
+		if (line == "exit" || line == ";;")
+			break ;
+		getline(std::cin, line);
 		handleInstruction(line);
+		this->_count_line++;
+	}
+	try
+	{
+		if (line != ";;")
+		{
+			if (line == "exit")
+			{
+				getline(std::cin, line);
+				if (line != ";;")
+					throw ErrorException("Invalid exit");
+			}
+			else
+				throw ErrorException("Invalid exit");
+		}
+	}
+	catch (std::exception &e)
+	{
+		this->_ss << "Error"
+				  << "[Line:" << this->_count_line << "]->"
+				  << e.what()
+				  << std::endl;
+	}
 	std::cout << this->_ss.str();
 }
 
@@ -231,34 +268,39 @@ void	VM::handleFile(const char *file_name)
 		if (!ifs.is_open())
 			throw ErrorException("Can't open FILE");
 		while (getline(ifs, line))
+		{
+			if (line == "exit")
+				break ;
 			handleInstruction(line);
+			this->_count_line++;
+		}
+		if (line != "exit")
+			throw ErrorException("Error : Invalid exit");
 	}
 	catch (std::exception & e)
 	{
-		std::cout << e.what() << std::endl;
+		this->_ss << e.what() << std::endl;
 	}
 	std::cout << this->_ss.str();
-
 }
 
-void	VM::handleInstruction(std::string &line)
+void	VM::handleInstruction(std::string & line)
 {
-	eInstruction instr;
 	Parser p;
 
+	if (line[0] == ';' || line == "")
+		return ;
 	try
 	{
-		instr = p.parse(line);
-		execute(instr);
+		execute(p.parse(line));
 	}
 	catch (std::exception & e)
 	{
-		this->_ss	<< "Error"
+		this->_ss	 << "Error"
 					 << "[Line:" << this->_count_line << "]->"
 					 << e.what()
 					 << std::endl;
 	}
-	this->_count_line++;
 }
 
 void	VM::execute(eInstruction instruction)

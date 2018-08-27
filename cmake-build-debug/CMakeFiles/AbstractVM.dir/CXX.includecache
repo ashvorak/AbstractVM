@@ -11,10 +11,16 @@ map
 -
 string
 -
+vector
+-
+sstream
+-
+fstream
+-
+iostream
+-
 
 /Users/oshvorak/AbstractVM/inc/IOperand.hpp
-string
--
 AbstractVM.hpp
 /Users/oshvorak/AbstractVM/inc/AbstractVM.hpp
 
@@ -27,12 +33,8 @@ OperandFactory.hpp
 /Users/oshvorak/AbstractVM/inc/OperandFactory.hpp
 
 /Users/oshvorak/AbstractVM/inc/OperandFactory.hpp
-map
--
 IOperand.hpp
 /Users/oshvorak/AbstractVM/inc/IOperand.hpp
-limits
--
 
 /Users/oshvorak/AbstractVM/inc/Parser.hpp
 AbstractVM.hpp
@@ -43,16 +45,6 @@ regex
 /Users/oshvorak/AbstractVM/inc/regex
 
 /Users/oshvorak/AbstractVM/inc/VM.hpp
-iostream
--
-string
--
-vector
--
-sstream
--
-fstream
--
 Parser.hpp
 /Users/oshvorak/AbstractVM/inc/Parser.hpp
 OperandFactory.hpp

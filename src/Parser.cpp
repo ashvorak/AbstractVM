@@ -25,8 +25,7 @@ std::map<std::string, eInstruction > Parser::_pm = {{"push", Push},
 													{"mul", Mul},
 													{"div", Div},
 													{"mod", Mod},
-													{"print", Print},
-													{"exit", Exit}};
+													{"print", Print}};
 
 eOperandType Parser::getType( void )
 {
@@ -40,7 +39,7 @@ std::string Parser::getValue( void )
 
 eInstruction  Parser::parse(std::string instr)
 {
-	std::regex 	rx1("(^[\\s]*?(pop|dump|add|sub|mul|div|mod|print|exit)[\\s]*?$)");
+	std::regex 	rx1("(^[\\s]*?(pop|dump|add|sub|mul|div|mod|print)[\\s]*?$)");
 	std::regex 	rx2("(^[\\s]*?(push|assert)[\\s]+(int8|int16|int32)[\\(][-]?[0-9]+[\\)][\\s]*?$)");
 	std::regex 	rx3("(^[\\s]*?(push|assert)[\\s]+(float|double)[\\(][-]?[0-9]+.[0-9]+[\\)][\\s]*?$)");
 	std::cmatch	match;
@@ -48,32 +47,14 @@ eInstruction  Parser::parse(std::string instr)
 
 	if (regex_match(instr.begin(), instr.end(), rx1))
 	{
-		std::regex_search(instr.c_str(), match, rx1);
+		std::regex  rx("(\\w+)");
+		std::regex_search(instr.c_str(), match, rx);
 		op = match[0];
 	}
 	else if (regex_match(instr.begin(), instr.end(), rx2))
-<<<<<<< HEAD
-	{
-		std::regex rx("int8|int16|int32|[-]?[0-9]+");
-
-		std::regex_search(instr.c_str(), match, rx);
-		Parser::_type = Int16;
-		Parser::_value = "32";
-		std::cout << "match " << match[0] << std::endl;
-	}
-	else if (regex_match(instr.begin(), instr.end(), rx3))
-	{
-		std::regex rx("[-]?[0-9]+.[0-9]+");
-
-		std::regex_search(instr.c_str(), match, rx);
-		Parser::_type = Float;
-		Parser::_value = match[0];
-	}
-=======
         op = parse_int(instr);
 	else if (regex_match(instr.begin(), instr.end(), rx3))
         op = parse_pointed(instr);
->>>>>>> 0297b241b915686efa2e85ed6c1c16598d765c0e
 	else
 		throw ValidException();
 	return (_pm[op]);
@@ -82,32 +63,31 @@ eInstruction  Parser::parse(std::string instr)
 std::string Parser::parse_int(std::string instr)
 {
     std::smatch	match;
-    std::regex  rx("(\\w+) (\\w+\\d+)\\((-?\\d+)\\)");
+    std::regex  rx("(\\w+)(\\s+)(\\w+\\d+)\\((-?\\d+)\\)");
 
     std::regex_search(instr, match, rx);
-
-    if (match[2] == "int8")
+    if (match[3] == "int8")
         Parser::_type = Int8;
-    else if (match[2] == "int16")
+    else if (match[3] == "int16")
         Parser::_type = Int16;
-    else if (match[2] == "int32")
+    else if (match[3] == "int32")
         Parser::_type = Int32;
-    Parser::_value = match[3];
+    Parser::_value = match[4];
     return (match[1]);
 }
 
 std::string Parser::parse_pointed(std::string instr)
 {
     std::smatch	match;
-    std::regex  rx("(\\w+) (\\w+)\\((-?\\d+.\\d+)\\)");
+    std::regex  rx("(\\w+)(\\s+)(\\w+)\\((-?\\d+.\\d+)\\)");
 
     std::regex_search(instr, match, rx);
 
-    if (match[2] == "float")
+    if (match[3] == "float")
         Parser::_type = Float;
-    else if (match[2] == "double")
+    else if (match[3] == "double")
         Parser::_type = Double;
-    Parser::_value = match[3];
+    Parser::_value = match[4];
     return (match[1]);
 }
 

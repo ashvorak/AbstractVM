@@ -13,9 +13,7 @@
 #ifndef OPERAND_FACTORY_HPP
 # define OPERAND_FACTORY_HPP
 
-#include <map>
 #include "IOperand.hpp"
-#include <limits>
 
 class OperandFactory {
 

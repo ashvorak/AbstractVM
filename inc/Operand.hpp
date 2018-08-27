@@ -50,7 +50,7 @@ class Operand : public IOperand {
 			eOperandType	type;
 			OperandFactory	Factory;
 
-			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
+			type = (rhs.getType() > this->_type) ? rhs.getType() : this->_type;
 			value = std::to_string(stod(this->_str, 0) + stod(rhs.toString(), 0));
 			return (Factory.createOperand(type, value));
 		}
@@ -61,7 +61,7 @@ class Operand : public IOperand {
 			eOperandType	type;
 			OperandFactory	Factory;
 
-			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
+			type = (rhs.getType() > this->_type) ? rhs.getType() : this->_type;
 			value = std::to_string(stod(this->_str, 0) - stod(rhs.toString(), 0));
 			return (Factory.createOperand(type, value));
 		}
@@ -72,7 +72,7 @@ class Operand : public IOperand {
 			eOperandType	type;
 			OperandFactory	Factory;
 
-			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
+			type = (rhs.getType() > this->_type) ? rhs.getType() : this->_type;
 			value = std::to_string(stod(this->_str, 0) * stod(rhs.toString(), 0));
 			return (Factory.createOperand(type, value));
 		}
@@ -85,7 +85,7 @@ class Operand : public IOperand {
 
 			if (!stod(rhs.toString(), NULL))
 				throw ZeroException("Division by 0");
-			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
+			type = (rhs.getType() > this->_type) ? rhs.getType() : this->_type;
 			value = std::to_string(stod(this->_str, 0) / stod(rhs.toString(), 0));
 			return (Factory.createOperand(type, value));
 		}
@@ -98,7 +98,7 @@ class Operand : public IOperand {
 
 			if (!stod(rhs.toString(), NULL))
 				throw ZeroException("Modulo by 0");
-			type = (rhs.getPrecision() > this->_precision) ? rhs.getType() : this->_type;
+			type = (rhs.getType() > this->_type) ? rhs.getType() : this->_type;
 			value = std::to_string(fmod(stod(this->_str, 0) , stod(rhs.toString(), 0)));
 			return (Factory.createOperand(type, value));
 		}
