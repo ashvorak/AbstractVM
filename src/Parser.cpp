@@ -43,27 +43,28 @@ eInstruction  Parser::parse(std::string instr)
 	std::regex 	rx1("^pop$|^dump$|^add$|^sub$|^mul$|^div$|^mod$|^print$|^exit$");
 	std::regex 	rx2("(^[\\s]*?(push|assert)[\\s]+(int8|int16|int32)[\\(][-]?[0-9]+[\\)][\\s]*?$)");
 	std::regex 	rx3("(^[\\s]*?(push|assert)[\\s]+(float|double)[\\(][-]?[0-9]+.[0-9]+[\\)][\\s]*?$)");
-	std::smatch	match;
+	std::cmatch	match;
 	std::string	op;
 
 	if (regex_match(instr.begin(), instr.end(), rx1))
 	{
-		std::regex_search(instr, match, rx1);
+		std::regex_search(instr.c_str(), match, rx1);
 		op = match[0];
 	}
 	else if (regex_match(instr.begin(), instr.end(), rx2))
 	{
-		std::regex rx("[-]?[0-9]+");
+		std::regex rx("int8|int16|int32|[-]?[0-9]+");
 
-		std::regex_search(instr, match, rx);
+		std::regex_search(instr.c_str(), match, rx);
 		Parser::_type = Int16;
-		Parser::_value = match[0];
+		Parser::_value = "32";
+		std::cout << "match " << match[0] << std::endl;
 	}
 	else if (regex_match(instr.begin(), instr.end(), rx3))
 	{
 		std::regex rx("[-]?[0-9]+.[0-9]+");
 
-		std::regex_search(instr, match, rx);
+		std::regex_search(instr.c_str(), match, rx);
 		Parser::_type = Float;
 		Parser::_value = match[0];
 	}
