@@ -37,12 +37,37 @@ class Operand : public IOperand {
 			else if (x < std::numeric_limits<T>::lowest())
 				throw UnderflowException();
 			this->_str = (type < Float) ? str.substr(0, str.find('.')) :  str;
+			if  (type > Int32)
+				while (this->_str[this->_str.size() - 1] == '0' && this->_str[this->_str.size() - 2] != '.')
+					this->_str.pop_back();
 			this->_type = type;
 			this->_precision = precision;
 		}
 
-		int getPrecision( void ) const { return (this->_precision); }
-		eOperandType getType( void ) const { return (this->_type); }
+		Operand<T>(const Operand<T> &copy)
+		{
+			*this = copy;
+		}
+
+		int getPrecision( void ) const
+		{
+			return (this->_precision);
+		}
+
+		eOperandType getType( void ) const
+		{
+			return (this->_type);
+		}
+
+		Operand<T> &operator=(const Operand<T> &src)
+		{
+			if (this == &src)
+				return (*this);
+			this->_str = src._str;
+			this->_precision = src._precision;
+			this->_type = src._type;
+			return (*this);
+		}
 
 		IOperand const * operator+( IOperand const & rhs ) const
 		{
@@ -152,7 +177,10 @@ class Operand : public IOperand {
 				}
 			};
 
-		~Operand( void ) {}
+		~Operand( void )
+		{
+
+		}
 		
 };
 

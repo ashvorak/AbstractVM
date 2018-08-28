@@ -230,7 +230,6 @@ void	VM::handleSI( void )
 	{
 		if (line == "exit" || line == ";;")
 			break ;
-		getline(std::cin, line);
 		handleInstruction(line);
 		this->_count_line++;
 	}
@@ -242,20 +241,17 @@ void	VM::handleSI( void )
 			{
 				getline(std::cin, line);
 				if (line != ";;")
-					throw ErrorException("Invalid exit");
+					throw ErrorException("Error : Invalid exit");
 			}
 			else
-				throw ErrorException("Invalid exit");
+				throw ErrorException("Error : Invalid exit");
 		}
+		std::cout << this->_ss.str();
 	}
 	catch (std::exception &e)
 	{
-		this->_ss << "Error"
-				  << "[Line:" << this->_count_line << "]->"
-				  << e.what()
-				  << std::endl;
+		std::cout << e.what() << std::endl;
 	}
-	std::cout << this->_ss.str();
 }
 
 void	VM::handleFile(const char *file_name)
@@ -276,12 +272,12 @@ void	VM::handleFile(const char *file_name)
 		}
 		if (line != "exit")
 			throw ErrorException("Error : Invalid exit");
+		std::cout << this->_ss.str();
 	}
 	catch (std::exception & e)
 	{
-		this->_ss << e.what() << std::endl;
+		std::cout << e.what() << std::endl;
 	}
-	std::cout << this->_ss.str();
 }
 
 void	VM::handleInstruction(std::string & line)

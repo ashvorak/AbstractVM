@@ -32,13 +32,14 @@ class Parser {
 		Parser(const Parser &copy);
 		~Parser();
 
+		Parser &operator=(const Parser &src);
+
 		static eOperandType getType( void );
 		static std::string getValue( void );
 
 		eInstruction 	parse(std::string instr);
         std::string     parse_int(std::string instr);
         std::string     parse_pointed(std::string instr);
-
 
 		class ValidException : public std::exception {
 

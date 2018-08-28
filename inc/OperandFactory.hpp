@@ -21,6 +21,13 @@ class OperandFactory {
 		static std::map <eOperandType, createValue > _m;
 
 	public:
+
+		OperandFactory();
+		OperandFactory(const OperandFactory &copy);
+		~OperandFactory();
+
+		OperandFactory &operator=(const OperandFactory &src);
+
 		IOperand const * createInt8( std::string const & value ) const;
 		IOperand const * createInt16( std::string const & value ) const;
 		IOperand const * createInt32( std::string const & value ) const;

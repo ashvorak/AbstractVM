@@ -27,6 +27,29 @@ std::map<std::string, eInstruction > Parser::_pm = {{"push", Push},
 													{"mod", Mod},
 													{"print", Print}};
 
+
+Parser::Parser()
+{
+
+}
+
+Parser::Parser(const Parser &copy)
+{
+	*this = copy;
+}
+
+Parser::~Parser()
+{
+
+}
+
+Parser & Parser::operator=(Parser const &src)
+{
+	if (this == &src)
+		return (*this);
+	return (*this);
+}
+
 eOperandType Parser::getType( void )
 {
 	return (_type);

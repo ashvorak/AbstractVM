@@ -19,6 +19,28 @@ std::map< eOperandType, createValue > OperandFactory::_m =  {{Int8,   &OperandFa
 															 {Float,  &OperandFactory::createFloat},
 															 {Double, &OperandFactory::createDouble}};
 
+OperandFactory::OperandFactory()
+{
+
+}
+
+OperandFactory::OperandFactory(const OperandFactory &copy)
+{
+	*this = copy;
+}
+
+OperandFactory::~OperandFactory()
+{
+
+}
+
+OperandFactory  & OperandFactory::operator=(const OperandFactory &src)
+{
+	if (this == &src)
+		return (*this);
+	return (*this);
+}
+
 IOperand const * OperandFactory::createInt8( std::string const & value ) const
 {
 	return ( new Operand<int8_t>(value, Int8, 0) );
