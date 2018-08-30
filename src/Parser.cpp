@@ -62,9 +62,9 @@ std::string Parser::getValue( void )
 
 eInstruction  Parser::parse(std::string instr)
 {
-	std::regex 	rx1("(^[\\s]*?(pop|dump|add|sub|mul|div|mod|print)[\\s]*?$)");
-	std::regex 	rx2("(^[\\s]*?(push|assert)[\\s]+(int8|int16|int32)[\\(][-]?[0-9]+[\\)][\\s]*?$)");
-	std::regex 	rx3("(^[\\s]*?(push|assert)[\\s]+(float|double)[\\(][-]?[0-9]+.[0-9]+[\\)][\\s]*?$)");
+	std::regex 	rx1("(^[\\s]*?(pop|dump|add|sub|mul|div|mod|print)[\\s]*?(\\;.*?)?$)");
+	std::regex 	rx2("(^[\\s]*?(push|assert)[\\s]+(int8|int16|int32)[\\(][-]?[0-9]+[\\)][\\s]*?(\\;.*?)?$)");
+	std::regex 	rx3("(^[\\s]*?(push|assert)[\\s]+(float|double)[\\(][-]?[0-9]+.[0-9]+[\\)][\\s]*?(\\;.*?)?$)");
 	std::cmatch	match;
 	std::string	op;
 

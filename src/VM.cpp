@@ -67,11 +67,11 @@ void VM::pop( void )
 
 void	VM::dump( void )
 {
-	std::vector<IOperand const *>::iterator it;
+	std::vector<IOperand const *>::iterator it;//reverse_it
 
 	if (!this->_stack.empty())
 	{
-		for (it = this->_stack.end() - 1; it >= this->_stack.begin(); it--)
+		for (it = this->_stack.end() - 1; it >= this->_stack.begin(); it--)//for(it = this->_stack.rbegin() - 1; it != this->_stack.rend(); it++)
 		{
 			this->_ss << (*it)->toString() << std::endl;
 		}
@@ -246,12 +246,12 @@ void	VM::handleSI( void )
 			else
 				throw ErrorException("Error : Invalid exit");
 		}
-		std::cout << this->_ss.str();
 	}
 	catch (std::exception &e)
 	{
-		std::cout << e.what() << std::endl;
+		this->_ss << e.what() << std::endl;
 	}
+	std::cout << this->_ss.str();
 }
 
 void	VM::handleFile(const char *file_name)
@@ -272,12 +272,12 @@ void	VM::handleFile(const char *file_name)
 		}
 		if (line != "exit")
 			throw ErrorException("Error : Invalid exit");
-		std::cout << this->_ss.str();
 	}
 	catch (std::exception & e)
 	{
-		std::cout << e.what() << std::endl;
+		this->_ss << e.what() << std::endl;
 	}
+	std::cout << this->_ss.str();
 }
 
 void	VM::handleInstruction(std::string & line)

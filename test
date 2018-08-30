@@ -1,11 +1,7 @@
-push int32(42)
-push int32(33)
-add
-push float(44.55)
-mul
-push double(42.42)
-push int32(42)
-dump
-pop
-assert double(42.42)
+push         float(5.0)
+push float(20.0)
+sub
+assert float(15.0)    ;fghfghfgh
+dump              ;dfgdfgdgdgdgf
 exit
+;;
