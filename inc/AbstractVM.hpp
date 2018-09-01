@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef ABSTRACTVM_H
-#define ABSTRACTVM_H
+# define ABSTRACTVM_H
 
 #include <map>
 #include <string>
@@ -44,7 +44,9 @@ enum eInstruction {
 	Div,
 	Mod,
     Print,
-	Exit
+	And,
+	Or,
+	Xor
 };
 
 typedef void 				(VM:: *oper)( void );

@@ -128,6 +128,45 @@ class Operand : public IOperand {
 			return (Factory.createOperand(type, value));
 		}
 
+		IOperand const * operator&( IOperand const & rhs ) const
+		{
+			std::string		value;
+			eOperandType	type;
+			OperandFactory	Factory;
+
+			if (this->_type > Int32 || rhs.getType() > Int32)
+				throw BinaryException();
+			type = (rhs.getType() > this->_type) ? rhs.getType() : this->_type;
+			value = std::to_string(stoi(this->_str, 0) & stoi(rhs.toString(), 0));
+			return (Factory.createOperand(type, value));
+		}
+
+		IOperand const * operator|( IOperand const & rhs ) const
+		{
+			std::string		value;
+			eOperandType	type;
+			OperandFactory	Factory;
+
+			if (this->_type > Int32 || rhs.getType() > Int32)
+				throw BinaryException();
+			type = (rhs.getType() > this->_type) ? rhs.getType() : this->_type;
+			value = std::to_string(stoi(this->_str, 0) | stoi(rhs.toString(), 0));
+			return (Factory.createOperand(type, value));
+		}
+
+		IOperand const * operator^( IOperand const & rhs ) const
+		{
+			std::string		value;
+			eOperandType	type;
+			OperandFactory	Factory;
+
+			if (this->_type > Int32 || rhs.getType() > Int32)
+				throw BinaryException();
+			type = (rhs.getType() > this->_type) ? rhs.getType() : this->_type;
+			value = std::to_string(stoi(this->_str, 0) ^ stoi(rhs.toString(), 0));
+			return (Factory.createOperand(type, value));
+		}
+
 		std::string const & toString( void ) const
 		{
 			return (this->_str);
@@ -175,7 +214,20 @@ class Operand : public IOperand {
 				{
 					return (this->_message.c_str());
 				}
-			};
+		};
+
+		class BinaryException : public std::exception
+		{
+
+			public:
+				BinaryException() {}
+				~BinaryException() throw() {}
+
+				virtual const char *what() const throw()
+				{
+					return ("Binary Exception");
+				}
+		};
 
 		~Operand( void )
 		{

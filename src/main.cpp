@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "../inc/VM.hpp"
+#include <iomanip>
+
 
 static void ft_usage( void )
 {

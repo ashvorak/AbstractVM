@@ -42,6 +42,10 @@ class VM {
 		void mod( void );
 		void print( void );
 
+		void and_b();
+		void or_b();
+		void xor_b();
+
 		void handleSI( void );
 		void handleFile(const char *file_name);
 

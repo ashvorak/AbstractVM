@@ -25,8 +25,10 @@ std::map<std::string, eInstruction > Parser::_pm = {{"push", Push},
 													{"mul", Mul},
 													{"div", Div},
 													{"mod", Mod},
-													{"print", Print}};
-
+													{"print", Print},
+													{"and", And},
+													{"or", Or},
+													{"xor", Xor}};
 
 Parser::Parser()
 {
@@ -62,7 +64,7 @@ std::string Parser::getValue( void )
 
 eInstruction  Parser::parse(std::string instr)
 {
-	std::regex 	rx1("(^[\\s]*?(pop|dump|add|sub|mul|div|mod|print)[\\s]*?(\\;.*?)?$)");
+	std::regex 	rx1("(^[\\s]*?(pop|dump|add|sub|mul|div|mod|print|and|or|xor)[\\s]*?(\\;.*?)?$)");
 	std::regex 	rx2("(^[\\s]*?(push|assert)[\\s]+(int8|int16|int32)[\\(][-]?[0-9]+[\\)][\\s]*?(\\;.*?)?$)");
 	std::regex 	rx3("(^[\\s]*?(push|assert)[\\s]+(float|double)[\\(][-]?[0-9]+.[0-9]+[\\)][\\s]*?(\\;.*?)?$)");
 	std::cmatch	match;

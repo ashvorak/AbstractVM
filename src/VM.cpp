@@ -21,7 +21,10 @@ std::map<eInstruction, oper> VM::_om = {   {Push, &VM::push},
 										   {Mul, &VM::mul},
 										   {Div, &VM::div},
 										   {Mod, &VM::mod},
-										   {Print, &VM::print}};
+										   {Print, &VM::print},
+										   {And, &VM::and_b},
+										   {Or, &VM::or_b},
+										   {Xor, &VM::xor_b}};
 
 VM::VM()
 {
@@ -35,7 +38,7 @@ VM::VM(const VM & copy)
 
 VM::~VM()
 {
-	 for(int i = this->_stack.size() - 1; i >= 0 ; i--)
+	for(int i = this->_stack.size() - 1; i >= 0 ; i--)
 		delete this->_stack[i];
 }
 
@@ -53,7 +56,6 @@ VM & VM::operator=(VM const &src)
 void VM::push( void )
 {
 	OperandFactory factory;
-
 	this->_stack.push_back(factory.createOperand(Parser::getType(), Parser::getValue()));
 }
 
@@ -65,20 +67,22 @@ void VM::pop( void )
 	this->_stack.pop_back();
 }
 
-void	VM::dump( void )
+void    VM::dump( void )
 {
-	std::vector<IOperand const *>::iterator it;//reverse_it
-
+	std::vector<IOperand const *>::iterator it;
 	if (!this->_stack.empty())
 	{
-		for (it = this->_stack.end() - 1; it >= this->_stack.begin(); it--)//for(it = this->_stack.rbegin() - 1; it != this->_stack.rend(); it++)
+		for (it = this->_stack.end() - 1; it >= this->_stack.begin(); it--)
 		{
-			this->_ss << (*it)->toString() << std::endl;
+			this->_ss   << "\033[1;34m"
+						<< (*it)->toString()
+						<< "\033[0m"
+						<< std::endl;
 		}
 	}
 }
 
-void	VM::assert( void )
+void    VM::assert( void )
 {
 	if (this->_stack.empty())
 		throw ErrorException("Assert on empty stack");
@@ -86,10 +90,9 @@ void	VM::assert( void )
 		throw ErrorException("Assert instruction is not true");
 }
 
-void	VM::add()
+void    VM::add()
 {
-	IOperand const	*value;
-
+	IOperand const  *value;
 	if (this->_stack.size() < 2)
 		throw ErrorException("Instruction 'add' when less that two values.");
 	try
@@ -98,10 +101,12 @@ void	VM::add()
 	}
 	catch (std::exception & e)
 	{
-		this->_ss	<< "Error"
-					 << "[Line:" << this->_count_line << "]->"
-					 << e.what()
-					 << std::endl;
+		this->_ss     << "\033[1;31m"
+					  << "Error"
+					  << "[Line:" << this->_count_line << "]->"
+					  << e.what()
+					  << "\033[0m"
+					  << std::endl;
 		return ;
 	}
 	delete this->_stack.back();
@@ -109,25 +114,25 @@ void	VM::add()
 	delete this->_stack.back();
 	this->_stack.pop_back();
 	this->_stack.push_back(value);
-
 }
 
-void	VM::sub()
+void    VM::sub()
 {
-	IOperand const	*value;
-
+	IOperand const  *value;
 	if (this->_stack.size() < 2)
 		throw ErrorException("Instruction 'sub' when less that two values.");
 	try
 	{
-		value = *(this->_stack[this->_stack.size() - 1]) - *(this->_stack[this->_stack.size() - 2]);
+		value = *(this->_stack[this->_stack.size() - 2]) - *(this->_stack[this->_stack.size() - 1]);
 	}
 	catch (std::exception & e)
 	{
-		this->_ss	<< "Error"
-					 << "[Line:" << this->_count_line << "]->"
-					 << e.what()
-					 << std::endl;
+		this->_ss     << "\033[1;31m"
+					  << "Error"
+					  << "[Line:" << this->_count_line << "]->"
+					  << e.what()
+					  << "\033[0m"
+					  << std::endl;
 		return ;
 	}
 	delete this->_stack.back();
@@ -137,10 +142,9 @@ void	VM::sub()
 	this->_stack.push_back(value);
 }
 
-void	VM::mul()
+void    VM::mul()
 {
-	IOperand const	*value;
-
+	IOperand const  *value;
 	if (this->_stack.size() < 2)
 		throw ErrorException("Instruction 'mul' when less that two values.");
 	try
@@ -149,10 +153,12 @@ void	VM::mul()
 	}
 	catch (std::exception & e)
 	{
-		this->_ss	<< "Error"
-					 << "[Line:" << this->_count_line << "]->"
-					 << e.what()
-					 << std::endl;
+		this->_ss     << "\033[1;31m"
+					  << "Error"
+					  << "[Line:" << this->_count_line << "]->"
+					  << e.what()
+					  << "\033[0m"
+					  << std::endl;
 		return ;
 	}
 	delete this->_stack.back();
@@ -162,22 +168,23 @@ void	VM::mul()
 	this->_stack.push_back(value);
 }
 
-void	VM::div()
+void    VM::div()
 {
-	IOperand const	*value;
-
+	IOperand const  *value;
 	if (this->_stack.size() < 2)
 		throw ErrorException("Instruction 'div' when less that two values.");
 	try
 	{
-		value = *(this->_stack[this->_stack.size() - 1]) / *(this->_stack[this->_stack.size() - 2]);
+		value = *(this->_stack[this->_stack.size() - 2]) / *(this->_stack[this->_stack.size() - 1]);
 	}
 	catch (std::exception & e)
 	{
-		this->_ss	<< "Error"
-					 << "[Line:" << this->_count_line << "]->"
-					 << e.what()
-					 << std::endl;
+		this->_ss     << "\033[1;31m"
+					  << "Error"
+					  << "[Line:" << this->_count_line << "]->"
+					  << e.what()
+					  << "\033[0m"
+					  << std::endl;
 		return ;
 	}
 	delete this->_stack.back();
@@ -187,22 +194,23 @@ void	VM::div()
 	this->_stack.push_back(value);
 }
 
-void	VM::mod()
+void    VM::mod()
 {
-	IOperand const	*value;
-
+	IOperand const  *value;
 	if (this->_stack.size() < 2)
 		throw ErrorException("Instruction 'mod' when less that two values.");
 	try
 	{
-		value = *(this->_stack[this->_stack.size() - 1]) % *(this->_stack[this->_stack.size() - 2]);
+		value = *(this->_stack[this->_stack.size() - 2]) % *(this->_stack[this->_stack.size() - 1]);
 	}
 	catch (std::exception & e)
 	{
-		this->_ss	<< "Error"
-					 << "[Line:" << this->_count_line << "]->"
-					 << e.what()
-					 << std::endl;
+		this->_ss     << "\033[1;31m"
+					  << "Error"
+					  << "[Line:" << this->_count_line << "]->"
+					  << e.what()
+					  << "\033[0m"
+					  << std::endl;
 		return ;
 	}
 	delete this->_stack.back();
@@ -211,21 +219,97 @@ void	VM::mod()
 	this->_stack.pop_back();
 	this->_stack.push_back(value);
 }
-
-void	VM::print( void )
+void    VM::print( void )
 {
 	if (this->_stack.empty())
 		throw ErrorException("Print on empty stack");
 	else if (this->_stack.back()->getType() != Int8)
 		throw ErrorException("Can't print (incompetiple type)");
 	else
-		this->_ss << static_cast<char>(stoi(this->_stack.back()->toString())) << std::endl;
+		this->_ss << static_cast<char>(stoi(this->_stack.back()->toString()));
 }
 
-void	VM::handleSI( void )
+void    VM::and_b()
+{
+	IOperand const  *value;
+	if (this->_stack.size() < 2)
+		throw ErrorException("Instruction 'and' when less that two values.");
+	try
+	{
+		value = *(this->_stack[this->_stack.size() - 1]) & *(this->_stack[this->_stack.size() - 2]);
+	}
+	catch (std::exception & e)
+	{
+		this->_ss     << "\033[1;31m"
+					  << "Error"
+					  << "[Line:" << this->_count_line << "]->"
+					  << e.what()
+					  << "\033[0m"
+					  << std::endl;
+		return ;
+	}
+	delete this->_stack.back();
+	this->_stack.pop_back();
+	delete this->_stack.back();
+	this->_stack.pop_back();
+	this->_stack.push_back(value);
+}
+
+void    VM::or_b()
+{
+	IOperand const  *value;
+	if (this->_stack.size() < 2)
+		throw ErrorException("Instruction 'or' when less that two values.");
+	try
+	{
+		value = *(this->_stack[this->_stack.size() - 1]) | *(this->_stack[this->_stack.size() - 2]);
+	}
+	catch (std::exception & e)
+	{
+		this->_ss     << "\033[1;31m"
+					  << "Error"
+					  << "[Line:" << this->_count_line << "]->"
+					  << e.what()
+					  << "\033[0m"
+					  << std::endl;
+		return ;
+	}
+	delete this->_stack.back();
+	this->_stack.pop_back();
+	delete this->_stack.back();
+	this->_stack.pop_back();
+	this->_stack.push_back(value);
+}
+
+void    VM::xor_b()
+{
+	IOperand const  *value;
+	if (this->_stack.size() < 2)
+		throw ErrorException("Instruction 'xor' when less that two values.");
+	try
+	{
+		value = *(this->_stack[this->_stack.size() - 1]) ^ *(this->_stack[this->_stack.size() - 2]);
+	}
+	catch (std::exception & e)
+	{
+		this->_ss     << "\033[1;31m"
+					  << "Error"
+					  << "[Line:" << this->_count_line << "]->"
+					  << e.what()
+					  << "\033[0m"
+					  << std::endl;
+		return ;
+	}
+	delete this->_stack.back();
+	this->_stack.pop_back();
+	delete this->_stack.back();
+	this->_stack.pop_back();
+	this->_stack.push_back(value);
+}
+
+void    VM::handleSI( void )
 {
 	std::string line;
-
 	while (getline(std::cin, line))
 	{
 		if (line == "exit" || line == ";;")
@@ -241,24 +325,27 @@ void	VM::handleSI( void )
 			{
 				getline(std::cin, line);
 				if (line != ";;")
-					throw ErrorException("Error : Invalid exit");
+					throw ErrorException("Invalid exit");
 			}
 			else
-				throw ErrorException("Error : Invalid exit");
+				throw ErrorException("Invalid exit");
 		}
 	}
-	catch (std::exception &e)
+	catch (std::exception & e)
 	{
-		this->_ss << e.what() << std::endl;
+		this->_ss     << "\033[1;31m"
+					  << "Error : "
+					  << e.what()
+					  << "\033[0m"
+					  << std::endl;
 	}
 	std::cout << this->_ss.str();
 }
 
-void	VM::handleFile(const char *file_name)
+void    VM::handleFile(const char *file_name)
 {
 	std::string line;
 	std::ifstream ifs(file_name);
-
 	try
 	{
 		if (!ifs.is_open())
@@ -271,19 +358,22 @@ void	VM::handleFile(const char *file_name)
 			this->_count_line++;
 		}
 		if (line != "exit")
-			throw ErrorException("Error : Invalid exit");
+			throw ErrorException("Invalid exit");
 	}
 	catch (std::exception & e)
 	{
-		this->_ss << e.what() << std::endl;
+		this->_ss     << "\033[1;31m"
+					  << "Error : "
+					  << e.what()
+					  << "\033[0m"
+					  << std::endl;
 	}
 	std::cout << this->_ss.str();
 }
 
-void	VM::handleInstruction(std::string & line)
+void    VM::handleInstruction(std::string & line)
 {
 	Parser p;
-
 	if (line[0] == ';' || line == "")
 		return ;
 	try
@@ -292,14 +382,16 @@ void	VM::handleInstruction(std::string & line)
 	}
 	catch (std::exception & e)
 	{
-		this->_ss	 << "Error"
-					 << "[Line:" << this->_count_line << "]->"
-					 << e.what()
-					 << std::endl;
+		this->_ss     << "\033[1;31m"
+					  << "Error"
+					  << "[Line:" << this->_count_line << "]->"
+					  << e.what()
+					  << "\033[0m"
+					  << std::endl;
 	}
 }
 
-void	VM::execute(eInstruction instruction)
+void    VM::execute(eInstruction instruction)
 {
 	try
 	{
@@ -307,14 +399,17 @@ void	VM::execute(eInstruction instruction)
 	}
 	catch (std::exception & e)
 	{
-		this->_ss	<< "Error"
-					<< "[Line:" << this->_count_line << "]->"
-				  	<< e.what()
-				  	<< std::endl;
+		this->_ss     << "\033[1;31m"
+					  << "Error"
+					  << "[Line:" << this->_count_line << "]->"
+					  << e.what()
+					  << "\033[0m"
+					  << std::endl;
 	}
 }
 
 VM::ErrorException::ErrorException() {}
+
 VM::ErrorException::~ErrorException() throw() {}
 
 VM::ErrorException::ErrorException(std::string message)
@@ -322,7 +417,7 @@ VM::ErrorException::ErrorException(std::string message)
 	this->_message = message;
 }
 
-const char* VM::ErrorException::what() const throw() 
+const char* VM::ErrorException::what() const throw()
 {
 	return (this->_message.c_str());
 }

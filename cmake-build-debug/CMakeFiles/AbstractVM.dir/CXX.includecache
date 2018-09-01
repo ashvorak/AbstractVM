@@ -69,4 +69,6 @@ OperandFactory.hpp
 /Users/oshvorak/AbstractVM/src/main.cpp
 ../inc/VM.hpp
 /Users/oshvorak/AbstractVM/inc/VM.hpp
+iomanip
+-
 
