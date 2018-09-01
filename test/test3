@@ -1,0 +1,8 @@
+sub
+push int8(7);gjhjghj
+push int16(1555);gfhgh
+push int32(3475384753485);fgghjghj
+push float(435345345.435345345);ghjghjghj
+push double(38945743598.394587349588735394587345);ghjghjghjgh
+dump
+exit

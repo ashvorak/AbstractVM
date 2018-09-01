@@ -1,7 +1,0 @@
-push         float(5.0)
-push float(20.0)
-sub
-assert float(15.0)    ;fghfghfgh
-dump              ;dfgdfgdgdgdgf
-exit
-;;

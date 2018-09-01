@@ -1,0 +1,10 @@
+pop;dsfsdfsdfsd
+pop;dsfsdf
+assert float(46456.456)
+push double(46454.45)
+push double(2.0)
+add
+;sdfsdfsdfsdf
+assert double(46456.45)
+aaaaaaa
+exit

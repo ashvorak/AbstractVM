@@ -1,0 +1,14 @@
+push int8(7)
+push int8(0)
+div
+add
+push int8(2)
+or
+dump
+push int8(2)
+and
+dump
+push double(2.0)
+xor
+dump
+exit

@@ -1,0 +1,5 @@
+push int8(6)
+push int8(100)
+mul
+pop
+dump
