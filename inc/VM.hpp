@@ -29,7 +29,7 @@ class VM {
 		VM(const VM & copy);
 		~VM();
 
-		VM &operator =(VM const &src);
+		VM &operator=(VM const &src);
 
 		void push( void );
 		void pop( void );

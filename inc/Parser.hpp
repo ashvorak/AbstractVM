@@ -15,7 +15,7 @@
 
 #include "AbstractVM.hpp"
 #include "Operand.hpp"
-#include "regex"
+#include <regex>
 
 class VM;
 
