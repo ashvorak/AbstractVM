@@ -3,11 +3,11 @@
 AbstractVM is a machine that uses a stack to compute simple arithmetic expressions. 
 These arithmetic expressions are provided to the machine as basic assembly programs.
 
-As for any assembly language, the language of AbstractVM is composed of a series of instructions, 
+## As for any assembly language, the language of AbstractVM is composed of a series of instructions, 
 with one instruction per line. However, AbstractVM’s assembly language has a limited type system, 
 which is a major difference from other real world assembly languages.
 
-## • Comments: Comments start with a ’;’ and finish with a newline. A comment can be either at the start of a line, or after an instruction.
+• Comments: Comments start with a ’;’ and finish with a newline. A comment can be either at the start of a line, or after an instruction.
 
 • push v: Pushes the value v at the top of the stack. The value v must have one of the following form:
   ◦ int8(n) : Creates an 8-bit integer with value n. ◦ int16(n) : Creates a 16-bit integer with value n. ◦ int32(n) : Creates a 32-bit integer with value n. ◦ float(z) : Creates a float with value z.
